@@ -24,9 +24,25 @@ Demonstrations and examples of using gptel, a simple LLM client for Emacs that s
 
 Demonstrations and examples of using org-ai, which integrates AI capabilities directly into org-mode.
 
+## Documentation
+
+### [Emacs Lisp Development Guide](./docs/elisp-development.md)
+
+A comprehensive guide for developing Emacs Lisp code, especially when working with AI coding agents. Topics include:
+- Best practices for AI-assisted Elisp development
+- Tools and techniques to avoid parenthesis mismatches (paredit, smartparens, lispy)
+- When and how to use cl-lib features
+- Lexical binding and scoping
+- Naming conventions and package prefixes
+- Keybinding conventions and reserved keys
+- Code formatting and file structure
+- Common pitfalls and how to avoid them
+
 ## Getting Started
 
 Each project directory contains its own README with setup instructions and examples.
+
+For developing Emacs Lisp code (especially with AI assistance), start with the [Elisp Development Guide](./docs/elisp-development.md).
 
 ## Contributing
 
