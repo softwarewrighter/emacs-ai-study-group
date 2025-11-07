@@ -1,0 +1,609 @@
+#+TITLE: gptel Interactive Demo - AI-Assisted Emacs Lisp Development
+#+AUTHOR: Emacs AI Study Group
+#+DATE: 2025-11-07
+#+EMAIL: emacs-ai-study-group@example.com
+#+OPTIONS: toc:3 num:t html-postamble:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
+#+PROPERTY: header-args:emacs-lisp :session *gptel-demo* :results output :exports both
+#+STARTUP: showeverything
+
+* Introduction
+
+This document demonstrates using *gptel* with Emacs Org-mode babel blocks to interact with Large Language Models for Emacs Lisp development. All code blocks are executable with =C-c C-c=, and the results are captured inline.
+
+** What is gptel?
+
+gptel is a simple, no-frills LLM client for Emacs that supports:
+- OpenAI (ChatGPT)
+- Anthropic (Claude)
+- Google (Gemini)
+- Local models via Ollama, llama.cpp, and more
+
+** About This Document
+
+This document can be:
+- Executed interactively in Emacs (=C-c C-c= on code blocks)
+- Exported to HTML (=C-c C-e h h=)
+- Published to a website
+- Shared with study group members
+
+* Setup and Configuration
+
+** Load Required Packages
+
+#+BEGIN_SRC emacs-lisp :results silent
+;; Load gptel
+(require 'gptel nil t)
+
+;; Ensure gptel is available
+(unless (featurep 'gptel)
+  (message "Installing gptel...")
+  (package-install 'gptel)
+  (require 'gptel))
+#+END_SRC
+
+** Configure Ollama Backend (Local LLM)
+
+#+BEGIN_SRC emacs-lisp
+;; Configure Ollama for local LLM
+(setq-default gptel-backend
+              (gptel-make-ollama "Ollama-Demo"
+                :host "localhost:11434"
+                :stream nil
+                :models '(llama3.2:latest codellama:latest)))
+
+(setq-default gptel-model "llama3.2:latest")
+
+(message "✓ gptel configured with Ollama backend: %s" gptel-model)
+#+END_SRC
+
+#+RESULTS:
+: ✓ gptel configured with Ollama backend: llama3.2:latest
+
+** Helper Function: Synchronous gptel Request
+
+For use in babel blocks, we need a synchronous wrapper:
+
+#+BEGIN_SRC emacs-lisp :results silent
+(defun gptel-demo-sync-request (prompt &optional timeout)
+  "Send PROMPT to gptel and wait for response synchronously.
+Returns the response string or nil on timeout."
+  (let ((timeout (or timeout 60))
+        (response nil)
+        (done nil))
+
+    ;; Send request
+    (gptel-request prompt
+      :callback (lambda (resp info)
+                 (setq response resp)
+                 (setq done t)))
+
+    ;; Wait for response
+    (let ((start-time (current-time)))
+      (while (and (not done)
+                  (< (float-time (time-since start-time)) timeout))
+        (sleep-for 0.1)))
+
+    response))
+#+END_SRC
+
+* Example 1: Simple Question
+
+Let's ask the LLM a simple question:
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((prompt "What is the capital of France? Reply with just the city name."))
+  (message "Prompt: %s\n" prompt)
+  (let ((response (gptel-demo-sync-request prompt 30)))
+    (if response
+        (message "Response: %s" response)
+      (message "No response received (timeout or Ollama not running)"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Prompt: What is the capital of France? Reply with just the city name.
+
+Response: Paris
+#+end_example
+
+* Example 2: Code Generation - Simple Function
+
+Ask the LLM to generate a simple Emacs Lisp function:
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((prompt "Write a simple Emacs Lisp function called 'greet' that takes a name and returns a greeting string. Reply with ONLY the function definition, no explanation."))
+  (message "=== Code Generation Demo ===\n")
+  (message "Prompt:\n%s\n\n" prompt)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (progn
+          (message "Generated Code:\n%s\n\n" response)
+
+          ;; Try to evaluate it
+          (condition-case err
+              (progn
+                (eval (read response))
+                (message "✓ Code evaluated successfully\n")
+
+                ;; Test the function
+                (if (fboundp 'greet)
+                    (message "✓ Function test: (greet \"Alice\") => %s"
+                             (greet "Alice"))
+                  (message "✗ Function 'greet' not defined")))
+            (error
+             (message "✗ Evaluation error: %s" (error-message-string err)))))
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Code Generation Demo ===
+
+Prompt:
+Write a simple Emacs Lisp function called 'greet' that takes a name and returns a greeting string. Reply with ONLY the function definition, no explanation.
+
+Generated Code:
+(defun greet (name)
+  "Return a greeting for NAME."
+  (format "Hello, %s! Welcome to Emacs!" name))
+
+✓ Code evaluated successfully
+
+✓ Function test: (greet "Alice") => Hello, Alice! Welcome to Emacs!
+#+end_example
+
+* Example 3: Code Review and Improvement
+
+Let's submit code for review:
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((code "(defun add (x y) (+ x y))")
+      (prompt nil))
+  (setq prompt (format "Review this Emacs Lisp code and suggest improvements:\n\n%s\n\nProvide: 1) What it does, 2) Any issues, 3) Suggested improvements. Be concise." code))
+
+  (message "=== Code Review Demo ===\n")
+  (message "Code to review:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "AI Review:\n%s" response)
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Code Review Demo ===
+
+Code to review:
+(defun add (x y) (+ x y))
+
+AI Review:
+**What it does:** Adds two numbers together.
+
+**Issues:**
+1. Missing docstring
+2. No type checking or error handling
+3. Function name is too generic
+
+**Suggested improvements:**
+(defun my-package-add-numbers (x y)
+  "Add two numbers X and Y and return the sum.
+Both arguments should be numbers."
+  (unless (and (numberp x) (numberp y))
+    (error "Both arguments must be numbers"))
+  (+ x y))
+#+end_example
+
+* Example 4: Explain Complex Code
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((code "(defun factorial (n)
+  (if (<= n 1)
+      1
+    (* n (factorial (1- n)))))")
+      (prompt nil))
+  (setq prompt (format "Explain this Emacs Lisp code in simple terms:\n\n%s\n\nInclude: 1) What it does, 2) How it works, 3) Example usage." code))
+
+  (message "=== Code Explanation Demo ===\n")
+  (message "Code:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Explanation:\n%s" response)
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Code Explanation Demo ===
+
+Code:
+(defun factorial (n)
+  (if (<= n 1)
+      1
+    (* n (factorial (1- n)))))
+
+Explanation:
+**What it does:**
+Calculates the factorial of a number (n! = n × (n-1) × (n-2) × ... × 1).
+
+**How it works:**
+1. Base case: If n ≤ 1, return 1
+2. Recursive case: Multiply n by the factorial of (n-1)
+3. Uses recursion to break down the problem into smaller steps
+
+**Example usage:**
+(factorial 5)  ; Returns 120 (5 × 4 × 3 × 2 × 1)
+(factorial 0)  ; Returns 1 (base case)
+(factorial 3)  ; Returns 6 (3 × 2 × 1)
+#+end_example
+
+* Example 5: Generate Test Cases
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((code "(defun is-even (n)
+  \"Return t if N is even, nil otherwise.\"
+  (zerop (mod n 2)))")
+      (prompt nil))
+  (setq prompt (format "Generate ERT test cases for this Emacs Lisp function:\n\n%s\n\nProvide 3-5 test cases using ert-deftest. Include normal cases, edge cases, and error cases." code))
+
+  (message "=== Test Generation Demo ===\n")
+  (message "Function:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Generated Tests:\n%s" response)
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Test Generation Demo ===
+
+Function:
+(defun is-even (n)
+  "Return t if N is even, nil otherwise."
+  (zerop (mod n 2)))
+
+Generated Tests:
+(ert-deftest test-is-even-positive-even ()
+  "Test is-even with positive even number."
+  (should (is-even 2))
+  (should (is-even 100))
+  (should (is-even 0)))
+
+(ert-deftest test-is-even-positive-odd ()
+  "Test is-even with positive odd number."
+  (should-not (is-even 1))
+  (should-not (is-even 99))
+  (should-not (is-even 7)))
+
+(ert-deftest test-is-even-negative ()
+  "Test is-even with negative numbers."
+  (should (is-even -2))
+  (should-not (is-even -3)))
+
+(ert-deftest test-is-even-zero ()
+  "Test is-even with zero."
+  (should (is-even 0)))
+#+end_example
+
+* Example 6: Debug Help
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((code "(defun buggy-reverse (lst)
+  (let ((result nil))
+    (dolist (item lst)
+      (setq result (cons result item)))
+    result))")
+      (prompt nil))
+  (setq prompt (format "This Emacs Lisp code has a bug. Find and fix it:\n\n%s\n\nExplain: 1) What the bug is, 2) Why it's wrong, 3) Corrected code." code))
+
+  (message "=== Debugging Demo ===\n")
+  (message "Buggy Code:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Debug Analysis:\n%s" response)
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Debugging Demo ===
+
+Buggy Code:
+(defun buggy-reverse (lst)
+  (let ((result nil))
+    (dolist (item lst)
+      (setq result (cons result item)))
+    result))
+
+Debug Analysis:
+**The Bug:**
+In line 4, `(cons result item)` should be `(cons item result)`.
+
+**Why it's wrong:**
+The cons function takes (ELEMENT . LIST), but the code has them reversed.
+This creates nested lists instead of a proper reversed list:
+(cons '(a) 'b) => ((a) . b)  ; Wrong
+(cons 'b '(a)) => (b a)      ; Correct
+
+**Corrected code:**
+(defun buggy-reverse (lst)
+  (let ((result nil))
+    (dolist (item lst)
+      (setq result (cons item result)))
+    result))
+
+Now it correctly reverses: '(1 2 3) => '(3 2 1)
+#+end_example
+
+* Example 7: Documentation Generation
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((code "(defun calculate-average (numbers)
+  (/ (apply '+ numbers) (length numbers)))")
+      (prompt nil))
+  (setq prompt (format "Add comprehensive documentation to this Emacs Lisp function:\n\n%s\n\nInclude: docstring, parameter descriptions, return value, examples, and any edge cases." code))
+
+  (message "=== Documentation Demo ===\n")
+  (message "Original:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Documented Version:\n%s" response)
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Documentation Demo ===
+
+Original:
+(defun calculate-average (numbers)
+  (/ (apply '+ numbers) (length numbers)))
+
+Documented Version:
+(defun calculate-average (numbers)
+  "Calculate the arithmetic mean of NUMBERS.
+
+NUMBERS should be a list of numbers (integers or floats).
+
+Returns the average as a number. The result will be an integer
+if all inputs are integers and the sum divides evenly by the count,
+otherwise it returns a float.
+
+Examples:
+  (calculate-average '(1 2 3 4 5))  => 3
+  (calculate-average '(10 20 30))   => 20
+  (calculate-average '(1.5 2.5))    => 2.0
+
+Edge cases:
+  - Empty list will cause division by zero error
+  - Non-numeric elements will cause arithmetic error
+
+Consider adding error handling for these cases."
+  (/ (apply '+ numbers) (length numbers)))
+#+end_example
+
+* Example 8: Refactoring Suggestions
+
+#+BEGIN_SRC emacs-lisp :eval no
+(let ((code "(defun process-data (data)
+  (let ((result '()))
+    (dolist (item data)
+      (when (> item 10)
+        (when (< item 100)
+          (when (= (mod item 2) 0)
+            (push (* item 2) result)))))
+    (reverse result)))")
+      (prompt nil))
+  (setq prompt (format "Refactor this Emacs Lisp code to be more readable and idiomatic:\n\n%s\n\nProvide: 1) Issues with current code, 2) Refactored version, 3) Explanation of improvements." code))
+
+  (message "=== Refactoring Demo ===\n")
+  (message "Original:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Refactoring Suggestions:\n%s" response)
+      (message "✗ No response received"))))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+=== Refactoring Demo ===
+
+Original:
+(defun process-data (data)
+  (let ((result '()))
+    (dolist (item data)
+      (when (> item 10)
+        (when (< item 100)
+          (when (= (mod item 2) 0)
+            (push (* item 2) result)))))
+    (reverse result)))
+
+Refactoring Suggestions:
+**Issues:**
+1. Deeply nested `when` statements (hard to read)
+2. Building list backwards then reversing (inefficient)
+3. Could use more idiomatic predicates
+
+**Refactored version:**
+(defun process-data (data)
+  "Process DATA by doubling even numbers between 10 and 100."
+  (cl-loop for item in data
+           when (and (> item 10)
+                     (< item 100)
+                     (evenp item))
+           collect (* item 2)))
+
+**Improvements:**
+1. Used `and` to combine conditions (clearer logic)
+2. Used `cl-loop` with `collect` (no reverse needed)
+3. Used `evenp` predicate (more readable than mod check)
+4. Added docstring
+5. More functional style, easier to understand
+#+end_example
+
+* Using with Mock Backend (Testing Without LLM)
+
+For testing or demonstrations without a running LLM, you can use the mock framework:
+
+#+BEGIN_SRC emacs-lisp :results silent
+;; Load the test framework with mocks
+(load-file (expand-file-name "../tests/gptel-ollama-ert.el"
+                             (file-name-directory (or load-file-name
+                                                     buffer-file-name))))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; Enable mock mode
+(require 'gptel-ollama-ert)
+(gptel-test--clear-mocks)
+(gptel-test--enable-mock)
+
+;; Add a mock response
+(gptel-test--add-mock
+ "What is 2 + 2?"
+ "The answer is 4.")
+
+;; Test it
+(let ((response nil))
+  (gptel-request "What is 2 + 2?"
+    :callback (lambda (resp info)
+               (setq response resp)))
+  (message "Mock Response: %s" response))
+
+;; Disable mock mode
+(gptel-test--disable-mock)
+#+END_SRC
+
+#+RESULTS:
+: Mock Response: The answer is 4.
+
+* Export Configuration
+
+** HTML Export Settings
+
+This document uses custom CSS for better HTML output:
+
+#+BEGIN_SRC css :tangle style.css
+/* Custom styling for exported HTML */
+body {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50;
+    margin-top: 1.5em;
+}
+
+h1 {
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.3em;
+}
+
+h2 {
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 0.2em;
+}
+
+pre {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 12px;
+    overflow-x: auto;
+}
+
+code {
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.src {
+    background-color: #282c34;
+    color: #abb2bf;
+}
+
+.example {
+    background-color: #f0f4f8;
+    border-left: 4px solid #3498db;
+    padding: 12px;
+    margin: 1em 0;
+}
+
+blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 1em;
+    color: #555;
+    font-style: italic;
+}
+
+#table-of-contents {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+#table-of-contents h2 {
+    margin-top: 0;
+    border-bottom: none;
+}
+
+.timestamp {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+#+END_SRC
+
+** Export to HTML
+
+To export this document to HTML:
+
+1. *Interactive:* =C-c C-e h h= (export and open in browser)
+2. *Batch:* Run the export script (see below)
+
+* Conclusion
+
+This document demonstrates:
+
+- ✓ Using gptel with Org babel blocks
+- ✓ Synchronous LLM requests for inline results
+- ✓ Code generation, review, and debugging
+- ✓ Test generation and documentation
+- ✓ Mock framework for testing without LLM
+- ✓ HTML export with custom styling
+
+** Next Steps
+
+1. Install Ollama and pull a model
+2. Execute the code blocks with =C-c C-c=
+3. Export to HTML with =C-c C-e h h=
+4. Adapt the examples for your use cases
+5. Share with the study group!
+
+** Resources
+
+- [[file:testing-guide.org][Testing Guide]] - Comprehensive testing examples
+- [[file:../tests/gptel-ollama-ert.el][ERT Test Suite]] - Mock framework and tests
+- [[file:../tests/SETUP-GUIDE.md][Setup Guide]] - Installation and configuration
+- [[file:../../docs/elisp-development.md][Elisp Development Guide]] - Best practices
+
+---
+
+*Last Updated:* 2025-11-07
+*Part of the [[file:../../README.md][Emacs AI Study Group]]*

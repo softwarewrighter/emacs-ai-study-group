@@ -14,8 +14,14 @@ gptel is a simple, no-frills LLM client for Emacs that supports:
 
 ### 📚 Documentation
 
+- **[docs/gptel-babel-demo.org](./docs/gptel-babel-demo.org)** - **NEW!** Interactive gptel demo with babel blocks
+  - 8+ working examples (code generation, review, debugging, testing)
+  - Executable with `C-c C-c` in Emacs
+  - Exports to beautiful HTML
+  - Includes mock framework examples
 - **[docs/demo.org](./docs/demo.org)** - Interactive demonstration with executable babel blocks
 - **[docs/testing-guide.org](./docs/testing-guide.org)** - Comprehensive testing guide with validation examples
+- **[docs/README-EXPORT.md](./docs/README-EXPORT.md)** - Guide for exporting org files to HTML
 - **[elisp/setup.el](./elisp/setup.el)** - Complete setup configuration for all backends
 
 ### 🧪 Testing Suite
@@ -37,8 +43,14 @@ gptel is a simple, no-frills LLM client for Emacs that supports:
 
 ```bash
 cd docs
-emacs testing-guide.org
+
+# New interactive babel demo with AI examples
+emacs gptel-babel-demo.org
 # Execute code blocks with C-c C-c
+# Export to HTML with C-c C-e h h
+
+# Or try the testing guide
+emacs testing-guide.org
 ```
 
 ### Option 2: Run Unit Tests (No LLM Required)
@@ -161,9 +173,11 @@ ollama pull llama3.2
 
 ## Documentation
 
-- **[Elisp Development Guide](../docs/elisp-development.md)** - Best practices for developing Elisp with AI coding agents
+- **[gptel Babel Demo (Org)](./docs/gptel-babel-demo.org)** - **NEW!** Interactive AI examples with HTML export
+- **[Export Guide](./docs/README-EXPORT.md)** - How to export org files to HTML
 - **[Testing Guide (Org)](./docs/testing-guide.org)** - Interactive testing examples
 - **[Setup Guide](./tests/SETUP-GUIDE.md)** - Detailed testing setup
+- **[Elisp Development Guide](../docs/elisp-development.md)** - Best practices for developing Elisp with AI coding agents
 - **[Test Results README](./tests/README.md)** - Understanding test outputs
 
 ## Resources
@@ -179,6 +193,11 @@ ollama pull llama3.2
 demo-gptel/
 ├── README.md                      # This file
 ├── docs/
+│   ├── gptel-babel-demo.org       # Interactive babel demo (NEW!)
+│   ├── README-EXPORT.md           # Export guide (NEW!)
+│   ├── export-to-html.el          # Export script (NEW!)
+│   ├── export.sh                  # Bash export script (NEW!)
+│   ├── style.css                  # HTML styling (NEW!)
 │   ├── demo.org                   # Interactive demo
 │   └── testing-guide.org          # Testing guide with examples
 ├── elisp/
@@ -186,7 +205,7 @@ demo-gptel/
 └── tests/
     ├── SETUP-GUIDE.md             # Testing setup guide
     ├── README.md                  # Test overview
-    ├── gptel-ollama-ert.el        # ERT test suite (NEW!)
+    ├── gptel-ollama-ert.el        # ERT test suite
     ├── test-automated-ollama.el   # Automated testing
     ├── test-ollama-fizzbuzz.el    # Static unit tests
     └── results/                   # Test result files
@@ -239,11 +258,13 @@ See [tests/results/](./tests/results/) for more real examples!
 
 ## Next Steps
 
-1. **Try the interactive guide:** Open `docs/testing-guide.org` and execute the babel blocks
-2. **Run unit tests:** See what mocking looks like without needing an LLM
-3. **Install Ollama:** Try integration tests with a real local LLM
-4. **Write your own tests:** Use the examples as templates
-5. **Share your findings:** Contribute back to the study group
+1. **Try the gptel babel demo:** Open `docs/gptel-babel-demo.org` and execute AI examples
+2. **Export to HTML:** Run `cd docs && ./export.sh` to create shareable HTML
+3. **Try the testing guide:** Open `docs/testing-guide.org` and execute the babel blocks
+4. **Run unit tests:** See what mocking looks like without needing an LLM
+5. **Install Ollama:** Try integration tests with a real local LLM
+6. **Write your own examples:** Use the templates provided
+7. **Share your findings:** Contribute back to the study group
 
 ---
 
