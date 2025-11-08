@@ -9,25 +9,30 @@
 
 * IMPORTANT: About Evaluation
 
-This document has two modes of use:
+This document demonstrates gptel with example results already captured.
 
-** Mode 1: Quick Export (Pre-filled Results)
-Export without evaluating blocks (fast, no Ollama needed):
+** To Export HTML (Quick)
+
+Simply run the export script:
 #+BEGIN_EXAMPLE
 ./export.sh
 #+END_EXAMPLE
 
-The HTML will show example results that are already captured below each code block.
+This creates HTML with the example results shown below each code block.
 
-** Mode 2: Live Evaluation (Real AI Results)
-To capture LIVE results from your Ollama instance:
+** To Capture YOUR Own Results
+
+For live AI interactions:
 
 1. Start Ollama: ~ollama serve~
-2. Execute blocks interactively in Emacs: ~C-c C-c~ on each block
-3. Or execute all blocks: ~M-x org-babel-execute-buffer~
-4. Then export with: ~./export.sh --eval~ or ~C-c C-e h h~
+2. Open this file in Emacs
+3. Execute individual blocks: ~C-c C-c~ on each block
+4. Results will replace the examples below each block
+5. Export: ~C-c C-e h h~ or ~./export.sh~
 
-The HTML will show YOUR actual AI responses!
+The HTML will then show YOUR actual AI responses!
+
+**Note:** The mock testing section at the end is for demonstration only and doesn't need to be executed.
 
 * Introduction
 
@@ -475,14 +480,14 @@ Refactoring Suggestions:
 
 For testing or demonstrations without a running LLM, you can use the mock framework:
 
-#+BEGIN_SRC emacs-lisp :results silent
+#+BEGIN_SRC emacs-lisp :eval never :exports code
 ;; Load the test framework with mocks
 (load-file (expand-file-name "../tests/gptel-ollama-ert.el"
                              (file-name-directory (or load-file-name
                                                      buffer-file-name))))
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :eval never
 ;; Enable mock mode
 (require 'gptel-ollama-ert)
 (gptel-test--clear-mocks)
