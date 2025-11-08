@@ -1,6 +1,6 @@
 #+TITLE: elisp-dev-mcp Interactive Demo
 #+AUTHOR: Emacs AI Study Group
-#+DATE: [2025-01-03]
+#+DATE: 2025-11-06
 #+PROPERTY: header-args:emacs-lisp :results output :exports both
 #+PROPERTY: header-args:shell :results output :exports both
 #+STARTUP: showeverything

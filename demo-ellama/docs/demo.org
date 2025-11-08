@@ -1,6 +1,6 @@
 #+TITLE: Ellama Interactive Demo
 #+AUTHOR: Emacs AI Study Group
-#+DATE: [2025-01-03]
+#+DATE: 2025-11-06
 #+EMAIL: emacs-ai-study-group@example.com
 #+OPTIONS: toc:3 num:t html-postamble:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
