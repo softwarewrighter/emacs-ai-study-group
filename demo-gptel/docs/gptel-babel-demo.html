@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-11-07 Fri 16:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>gptel Interactive Demo - AI-Assisted Emacs Lisp Development</title>
+<meta name="author" content="Emacs AI Study Group" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">gptel Interactive Demo - AI-Assisted Emacs Lisp Development</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org597c78e">1. IMPORTANT: About Evaluation</a>
+<ul>
+<li><a href="#orgb88902e">1.1. To Export HTML (Quick)</a></li>
+<li><a href="#orgb9c5e02">1.2. To Capture YOUR Own Results</a></li>
+</ul>
+</li>
+<li><a href="#org56e404c">2. Introduction</a>
+<ul>
+<li><a href="#orge6c1ecc">2.1. What is gptel?</a></li>
+<li><a href="#org9972ffc">2.2. About This Document</a></li>
+</ul>
+</li>
+<li><a href="#orgaf0b4e8">3. Setup and Configuration</a>
+<ul>
+<li><a href="#org9e81460">3.1. Load Required Packages</a></li>
+<li><a href="#org3f715a7">3.2. Configure Ollama Backend (Local LLM)</a></li>
+<li><a href="#org9623010">3.3. Helper Function: Synchronous gptel Request</a></li>
+</ul>
+</li>
+<li><a href="#orgd35e007">4. Example 1: Simple Question</a></li>
+<li><a href="#org40de304">5. Example 2: Code Generation - Simple Function</a></li>
+<li><a href="#orgd9c7527">6. Example 3: Code Review and Improvement</a></li>
+<li><a href="#orgc5e5994">7. Example 4: Explain Complex Code</a></li>
+<li><a href="#org8527c9c">8. Example 5: Generate Test Cases</a></li>
+<li><a href="#orgc20070a">9. Example 6: Debug Help</a></li>
+<li><a href="#org7f9f9ae">10. Example 7: Documentation Generation</a></li>
+<li><a href="#org3107978">11. Example 8: Refactoring Suggestions</a></li>
+<li><a href="#orgf889ca6">12. Using with Mock Backend (Testing Without LLM)</a></li>
+<li><a href="#org36b0df9">13. Export Configuration</a>
+<ul>
+<li><a href="#org28844c1">13.1. HTML Export Settings</a></li>
+<li><a href="#orga646c10">13.2. Export to HTML</a></li>
+</ul>
+</li>
+<li><a href="#org36ef9a0">14. Conclusion</a>
+<ul>
+<li><a href="#org703baa7">14.1. Next Steps</a></li>
+<li><a href="#orgfa723ab">14.2. Resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org597c78e" class="outline-2">
+<h2 id="org597c78e"><span class="section-number-2">1.</span> IMPORTANT: About Evaluation</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This document demonstrates gptel with example results already captured.
+</p>
+</div>
+<div id="outline-container-orgb88902e" class="outline-3">
+<h3 id="orgb88902e"><span class="section-number-3">1.1.</span> To Export HTML (Quick)</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Simply run the export script:
+</p>
+<pre class="example" id="org7b1d023">
+./export.sh
+</pre>
+
+<p>
+This creates HTML with the example results shown below each code block.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb9c5e02" class="outline-3">
+<h3 id="orgb9c5e02"><span class="section-number-3">1.2.</span> To Capture YOUR Own Results</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+For live AI interactions:
+</p>
+
+<ol class="org-ol">
+<li>Start Ollama: <code>ollama serve</code></li>
+<li>Open this file in Emacs</li>
+<li>Execute individual blocks: <code>C-c C-c</code> on each block</li>
+<li>Results will replace the examples below each block</li>
+<li>Export: <code>C-c C-e h h</code> or <code>./export.sh</code></li>
+</ol>
+
+<p>
+The HTML will then show YOUR actual AI responses!
+</p>
+
+<p>
+<b><b>Note:</b></b> The mock testing section at the end is for demonstration only and doesn't need to be executed.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org56e404c" class="outline-2">
+<h2 id="org56e404c"><span class="section-number-2">2.</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This document demonstrates using <b>gptel</b> with Emacs Org-mode babel blocks to interact with Large Language Models for Emacs Lisp development. All code blocks are executable with <code>C-c C-c</code>, and the results are captured inline.
+</p>
+</div>
+<div id="outline-container-orge6c1ecc" class="outline-3">
+<h3 id="orge6c1ecc"><span class="section-number-3">2.1.</span> What is gptel?</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+gptel is a simple, no-frills LLM client for Emacs that supports:
+</p>
+<ul class="org-ul">
+<li>OpenAI (ChatGPT)</li>
+<li>Anthropic (Claude)</li>
+<li>Google (Gemini)</li>
+<li>Local models via Ollama, llama.cpp, and more</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9972ffc" class="outline-3">
+<h3 id="org9972ffc"><span class="section-number-3">2.2.</span> About This Document</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+This document can be:
+</p>
+<ul class="org-ul">
+<li>Executed interactively in Emacs (<code>C-c C-c</code> on code blocks)</li>
+<li>Exported to HTML (<code>C-c C-e h h</code>)</li>
+<li>Published to a website</li>
+<li>Shared with study group members</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaf0b4e8" class="outline-2">
+<h2 id="orgaf0b4e8"><span class="section-number-2">3.</span> Setup and Configuration</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org9e81460" class="outline-3">
+<h3 id="org9e81460"><span class="section-number-3">3.1.</span> Load Required Packages</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Load gptel
+(require 'gptel nil t)
+
+;; Ensure gptel is available
+(unless (featurep 'gptel)
+  (message "Installing gptel...")
+  (package-install 'gptel)
+  (require 'gptel))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3f715a7" class="outline-3">
+<h3 id="org3f715a7"><span class="section-number-3">3.2.</span> Configure Ollama Backend (Local LLM)</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Configure Ollama for local LLM
+(setq-default gptel-backend
+              (gptel-make-ollama "Ollama-Demo"
+                :host "localhost:11434"
+                :stream nil
+                :models '(llama3.2:latest codellama:latest)))
+
+(setq-default gptel-model "llama3.2:latest")
+
+(message "✓ gptel configured with Ollama backend: %s" gptel-model)
+</pre>
+</div>
+
+<pre class="example">
+✓ gptel configured with Ollama backend: llama3.2:latest
+</pre>
+</div>
+</div>
+<div id="outline-container-org9623010" class="outline-3">
+<h3 id="org9623010"><span class="section-number-3">3.3.</span> Helper Function: Synchronous gptel Request</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+For use in babel blocks, we need a synchronous wrapper:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun gptel-demo-sync-request (prompt &amp;optional timeout)
+  "Send PROMPT to gptel and wait for response synchronously.
+Returns the response string or nil on timeout."
+  (let ((timeout (or timeout 60))
+        (response nil)
+        (done nil))
+
+    ;; Send request
+    (gptel-request prompt
+      :callback (lambda (resp info)
+                 (setq response resp)
+                 (setq done t)))
+
+    ;; Wait for response
+    (let ((start-time (current-time)))
+      (while (and (not done)
+                  (&lt; (float-time (time-since start-time)) timeout))
+        (sleep-for 0.1)))
+
+    response))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd35e007" class="outline-2">
+<h2 id="orgd35e007"><span class="section-number-2">4.</span> Example 1: Simple Question</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Let's ask the LLM a simple question:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((prompt "What is the capital of France? Reply with just the city name."))
+  (message "Prompt: %s\n" prompt)
+  (let ((response (gptel-demo-sync-request prompt 30)))
+    (if response
+        (message "Response: %s" response)
+      (message "No response received (timeout or Ollama not running)"))))
+</pre>
+</div>
+
+<pre class="example" id="org5f31289">
+Prompt: What is the capital of France? Reply with just the city name.
+
+Response: Paris
+</pre>
+</div>
+</div>
+<div id="outline-container-org40de304" class="outline-2">
+<h2 id="org40de304"><span class="section-number-2">5.</span> Example 2: Code Generation - Simple Function</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Ask the LLM to generate a simple Emacs Lisp function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((prompt "Write a simple Emacs Lisp function called 'greet' that takes a name and returns a greeting string. Reply with ONLY the function definition, no explanation."))
+  (message "=== Code Generation Demo ===\n")
+  (message "Prompt:\n%s\n\n" prompt)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (progn
+          (message "Generated Code:\n%s\n\n" response)
+
+          ;; Try to evaluate it
+          (condition-case err
+              (progn
+                (eval (read response))
+                (message "✓ Code evaluated successfully\n")
+
+                ;; Test the function
+                (if (fboundp 'greet)
+                    (message "✓ Function test: (greet \"Alice\") =&gt; %s"
+                             (greet "Alice"))
+                  (message "✗ Function 'greet' not defined")))
+            (error
+             (message "✗ Evaluation error: %s" (error-message-string err)))))
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="org64015a4">
+=== Code Generation Demo ===
+
+Prompt:
+Write a simple Emacs Lisp function called 'greet' that takes a name and returns a greeting string. Reply with ONLY the function definition, no explanation.
+
+Generated Code:
+(defun greet (name)
+  "Return a greeting for NAME."
+  (format "Hello, %s! Welcome to Emacs!" name))
+
+✓ Code evaluated successfully
+
+✓ Function test: (greet "Alice") =&gt; Hello, Alice! Welcome to Emacs!
+</pre>
+</div>
+</div>
+<div id="outline-container-orgd9c7527" class="outline-2">
+<h2 id="orgd9c7527"><span class="section-number-2">6.</span> Example 3: Code Review and Improvement</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Let's submit code for review:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((code "(defun add (x y) (+ x y))")
+      (prompt nil))
+  (setq prompt (format "Review this Emacs Lisp code and suggest improvements:\n\n%s\n\nProvide: 1) What it does, 2) Any issues, 3) Suggested improvements. Be concise." code))
+
+  (message "=== Code Review Demo ===\n")
+  (message "Code to review:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "AI Review:\n%s" response)
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="org443b95a">
+=== Code Review Demo ===
+
+Code to review:
+(defun add (x y) (+ x y))
+
+AI Review:
+**What it does:** Adds two numbers together.
+
+**Issues:**
+1. Missing docstring
+2. No type checking or error handling
+3. Function name is too generic
+
+**Suggested improvements:**
+(defun my-package-add-numbers (x y)
+  "Add two numbers X and Y and return the sum.
+Both arguments should be numbers."
+  (unless (and (numberp x) (numberp y))
+    (error "Both arguments must be numbers"))
+  (+ x y))
+</pre>
+</div>
+</div>
+<div id="outline-container-orgc5e5994" class="outline-2">
+<h2 id="orgc5e5994"><span class="section-number-2">7.</span> Example 4: Explain Complex Code</h2>
+<div class="outline-text-2" id="text-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((code "(defun factorial (n)
+  (if (&lt;= n 1)
+      1
+    (* n (factorial (1- n)))))")
+      (prompt nil))
+  (setq prompt (format "Explain this Emacs Lisp code in simple terms:\n\n%s\n\nInclude: 1) What it does, 2) How it works, 3) Example usage." code))
+
+  (message "=== Code Explanation Demo ===\n")
+  (message "Code:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Explanation:\n%s" response)
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="org4693605">
+=== Code Explanation Demo ===
+
+Code:
+(defun factorial (n)
+  (if (&lt;= n 1)
+      1
+    (* n (factorial (1- n)))))
+
+Explanation:
+**What it does:**
+Calculates the factorial of a number (n! = n × (n-1) × (n-2) × ... × 1).
+
+**How it works:**
+1. Base case: If n ≤ 1, return 1
+2. Recursive case: Multiply n by the factorial of (n-1)
+3. Uses recursion to break down the problem into smaller steps
+
+**Example usage:**
+(factorial 5)  ; Returns 120 (5 × 4 × 3 × 2 × 1)
+(factorial 0)  ; Returns 1 (base case)
+(factorial 3)  ; Returns 6 (3 × 2 × 1)
+</pre>
+</div>
+</div>
+<div id="outline-container-org8527c9c" class="outline-2">
+<h2 id="org8527c9c"><span class="section-number-2">8.</span> Example 5: Generate Test Cases</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((code "(defun is-even (n)
+  \"Return t if N is even, nil otherwise.\"
+  (zerop (mod n 2)))")
+      (prompt nil))
+  (setq prompt (format "Generate ERT test cases for this Emacs Lisp function:\n\n%s\n\nProvide 3-5 test cases using ert-deftest. Include normal cases, edge cases, and error cases." code))
+
+  (message "=== Test Generation Demo ===\n")
+  (message "Function:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Generated Tests:\n%s" response)
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="orgf1c21e4">
+=== Test Generation Demo ===
+
+Function:
+(defun is-even (n)
+  "Return t if N is even, nil otherwise."
+  (zerop (mod n 2)))
+
+Generated Tests:
+(ert-deftest test-is-even-positive-even ()
+  "Test is-even with positive even number."
+  (should (is-even 2))
+  (should (is-even 100))
+  (should (is-even 0)))
+
+(ert-deftest test-is-even-positive-odd ()
+  "Test is-even with positive odd number."
+  (should-not (is-even 1))
+  (should-not (is-even 99))
+  (should-not (is-even 7)))
+
+(ert-deftest test-is-even-negative ()
+  "Test is-even with negative numbers."
+  (should (is-even -2))
+  (should-not (is-even -3)))
+
+(ert-deftest test-is-even-zero ()
+  "Test is-even with zero."
+  (should (is-even 0)))
+</pre>
+</div>
+</div>
+<div id="outline-container-orgc20070a" class="outline-2">
+<h2 id="orgc20070a"><span class="section-number-2">9.</span> Example 6: Debug Help</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((code "(defun buggy-reverse (lst)
+  (let ((result nil))
+    (dolist (item lst)
+      (setq result (cons result item)))
+    result))")
+      (prompt nil))
+  (setq prompt (format "This Emacs Lisp code has a bug. Find and fix it:\n\n%s\n\nExplain: 1) What the bug is, 2) Why it's wrong, 3) Corrected code." code))
+
+  (message "=== Debugging Demo ===\n")
+  (message "Buggy Code:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Debug Analysis:\n%s" response)
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="org87d869d">
+=== Debugging Demo ===
+
+Buggy Code:
+(defun buggy-reverse (lst)
+  (let ((result nil))
+    (dolist (item lst)
+      (setq result (cons result item)))
+    result))
+
+Debug Analysis:
+**The Bug:**
+In line 4, `(cons result item)` should be `(cons item result)`.
+
+**Why it's wrong:**
+The cons function takes (ELEMENT . LIST), but the code has them reversed.
+This creates nested lists instead of a proper reversed list:
+(cons '(a) 'b) =&gt; ((a) . b)  ; Wrong
+(cons 'b '(a)) =&gt; (b a)      ; Correct
+
+**Corrected code:**
+(defun buggy-reverse (lst)
+  (let ((result nil))
+    (dolist (item lst)
+      (setq result (cons item result)))
+    result))
+
+Now it correctly reverses: '(1 2 3) =&gt; '(3 2 1)
+</pre>
+</div>
+</div>
+<div id="outline-container-org7f9f9ae" class="outline-2">
+<h2 id="org7f9f9ae"><span class="section-number-2">10.</span> Example 7: Documentation Generation</h2>
+<div class="outline-text-2" id="text-10">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((code "(defun calculate-average (numbers)
+  (/ (apply '+ numbers) (length numbers)))")
+      (prompt nil))
+  (setq prompt (format "Add comprehensive documentation to this Emacs Lisp function:\n\n%s\n\nInclude: docstring, parameter descriptions, return value, examples, and any edge cases." code))
+
+  (message "=== Documentation Demo ===\n")
+  (message "Original:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Documented Version:\n%s" response)
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="org72be4ae">
+=== Documentation Demo ===
+
+Original:
+(defun calculate-average (numbers)
+  (/ (apply '+ numbers) (length numbers)))
+
+Documented Version:
+(defun calculate-average (numbers)
+  "Calculate the arithmetic mean of NUMBERS.
+
+NUMBERS should be a list of numbers (integers or floats).
+
+Returns the average as a number. The result will be an integer
+if all inputs are integers and the sum divides evenly by the count,
+otherwise it returns a float.
+
+Examples:
+  (calculate-average '(1 2 3 4 5))  =&gt; 3
+  (calculate-average '(10 20 30))   =&gt; 20
+  (calculate-average '(1.5 2.5))    =&gt; 2.0
+
+Edge cases:
+  - Empty list will cause division by zero error
+  - Non-numeric elements will cause arithmetic error
+
+Consider adding error handling for these cases."
+  (/ (apply '+ numbers) (length numbers)))
+</pre>
+</div>
+</div>
+<div id="outline-container-org3107978" class="outline-2">
+<h2 id="org3107978"><span class="section-number-2">11.</span> Example 8: Refactoring Suggestions</h2>
+<div class="outline-text-2" id="text-11">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((code "(defun process-data (data)
+  (let ((result '()))
+    (dolist (item data)
+      (when (&gt; item 10)
+        (when (&lt; item 100)
+          (when (= (mod item 2) 0)
+            (push (* item 2) result)))))
+    (reverse result)))")
+      (prompt nil))
+  (setq prompt (format "Refactor this Emacs Lisp code to be more readable and idiomatic:\n\n%s\n\nProvide: 1) Issues with current code, 2) Refactored version, 3) Explanation of improvements." code))
+
+  (message "=== Refactoring Demo ===\n")
+  (message "Original:\n%s\n\n" code)
+
+  (let ((response (gptel-demo-sync-request prompt 60)))
+    (if response
+        (message "Refactoring Suggestions:\n%s" response)
+      (message "✗ No response received"))))
+</pre>
+</div>
+
+<pre class="example" id="org4d86021">
+=== Refactoring Demo ===
+
+Original:
+(defun process-data (data)
+  (let ((result '()))
+    (dolist (item data)
+      (when (&gt; item 10)
+        (when (&lt; item 100)
+          (when (= (mod item 2) 0)
+            (push (* item 2) result)))))
+    (reverse result)))
+
+Refactoring Suggestions:
+**Issues:**
+1. Deeply nested `when` statements (hard to read)
+2. Building list backwards then reversing (inefficient)
+3. Could use more idiomatic predicates
+
+**Refactored version:**
+(defun process-data (data)
+  "Process DATA by doubling even numbers between 10 and 100."
+  (cl-loop for item in data
+           when (and (&gt; item 10)
+                     (&lt; item 100)
+                     (evenp item))
+           collect (* item 2)))
+
+**Improvements:**
+1. Used `and` to combine conditions (clearer logic)
+2. Used `cl-loop` with `collect` (no reverse needed)
+3. Used `evenp` predicate (more readable than mod check)
+4. Added docstring
+5. More functional style, easier to understand
+</pre>
+</div>
+</div>
+<div id="outline-container-orgf889ca6" class="outline-2">
+<h2 id="orgf889ca6"><span class="section-number-2">12.</span> Using with Mock Backend (Testing Without LLM)</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+For testing or demonstrations without a running LLM, you can use the mock framework:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Load the test framework with mocks
+(load-file (expand-file-name "../tests/gptel-ollama-ert.el"
+                             (file-name-directory (or load-file-name
+                                                     buffer-file-name))))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Enable mock mode
+(require 'gptel-ollama-ert)
+(gptel-test--clear-mocks)
+(gptel-test--enable-mock)
+
+;; Add a mock response
+(gptel-test--add-mock
+ "What is 2 + 2?"
+ "The answer is 4.")
+
+;; Test it
+(let ((response nil))
+  (gptel-request "What is 2 + 2?"
+    :callback (lambda (resp info)
+               (setq response resp)))
+  (message "Mock Response: %s" response))
+
+;; Disable mock mode
+(gptel-test--disable-mock)
+</pre>
+</div>
+
+<pre class="example">
+Mock Response: The answer is 4.
+</pre>
+</div>
+</div>
+<div id="outline-container-org36b0df9" class="outline-2">
+<h2 id="org36b0df9"><span class="section-number-2">13.</span> Export Configuration</h2>
+<div class="outline-text-2" id="text-13">
+</div>
+<div id="outline-container-org28844c1" class="outline-3">
+<h3 id="org28844c1"><span class="section-number-3">13.1.</span> HTML Export Settings</h3>
+<div class="outline-text-3" id="text-13-1">
+<p>
+This document uses custom CSS for better HTML output:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-css">/* Custom styling for exported HTML */
+body {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+h1, h2, h3, h4 {
+    color: #2c3e50;
+    margin-top: 1.5em;
+}
+
+h1 {
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.3em;
+}
+
+h2 {
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 0.2em;
+}
+
+pre {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 12px;
+    overflow-x: auto;
+}
+
+code {
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.src {
+    background-color: #282c34;
+    color: #abb2bf;
+}
+
+.example {
+    background-color: #f0f4f8;
+    border-left: 4px solid #3498db;
+    padding: 12px;
+    margin: 1em 0;
+}
+
+blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 1em;
+    color: #555;
+    font-style: italic;
+}
+
+#table-of-contents {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+#table-of-contents h2 {
+    margin-top: 0;
+    border-bottom: none;
+}
+
+.timestamp {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga646c10" class="outline-3">
+<h3 id="orga646c10"><span class="section-number-3">13.2.</span> Export to HTML</h3>
+<div class="outline-text-3" id="text-13-2">
+<p>
+To export this document to HTML:
+</p>
+
+<ol class="org-ol">
+<li><b>Interactive:</b> <code>C-c C-e h h</code> (export and open in browser)</li>
+<li><b>Batch:</b> Run the export script (see below)</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org36ef9a0" class="outline-2">
+<h2 id="org36ef9a0"><span class="section-number-2">14.</span> Conclusion</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+This document demonstrates:
+</p>
+
+<ul class="org-ul">
+<li>✓ Using gptel with Org babel blocks</li>
+<li>✓ Synchronous LLM requests for inline results</li>
+<li>✓ Code generation, review, and debugging</li>
+<li>✓ Test generation and documentation</li>
+<li>✓ Mock framework for testing without LLM</li>
+<li>✓ HTML export with custom styling</li>
+</ul>
+</div>
+<div id="outline-container-org703baa7" class="outline-3">
+<h3 id="org703baa7"><span class="section-number-3">14.1.</span> Next Steps</h3>
+<div class="outline-text-3" id="text-14-1">
+<ol class="org-ol">
+<li>Install Ollama and pull a model</li>
+<li>Execute the code blocks with <code>C-c C-c</code></li>
+<li>Export to HTML with <code>C-c C-e h h</code></li>
+<li>Adapt the examples for your use cases</li>
+<li>Share with the study group!</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgfa723ab" class="outline-3">
+<h3 id="orgfa723ab"><span class="section-number-3">14.2.</span> Resources</h3>
+<div class="outline-text-3" id="text-14-2">
+<ul class="org-ul">
+<li><a href="testing-guide.html">Testing Guide</a> - Comprehensive testing examples</li>
+<li><a href="../tests/gptel-ollama-ert.el">ERT Test Suite</a> - Mock framework and tests</li>
+<li><a href="../tests/SETUP-GUIDE.md">Setup Guide</a> - Installation and configuration</li>
+<li><a href="../../docs/elisp-development.md">Elisp Development Guide</a> - Best practices</li>
+</ul>
+
+<p>
+&#x2014;
+</p>
+
+<p>
+<b>Last Updated:</b> 2025-11-07
+<b>Part of the <a href="../../README.md">Emacs AI Study Group</a></b>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Emacs AI Study Group (<a href="mailto:emacs-ai-study-group@example.com">emacs-ai-study-group@example.com</a>)</p>
+<p class="date">Date: 2025-11-07</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 30.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,1846 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-11-07 Fri 16:39 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ellama Interactive Demo</title>
+<meta name="author" content="Emacs AI Study Group" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Ellama Interactive Demo</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org1f288fc">1. IMPORTANT: About Evaluation</a>
+<ul>
+<li><a href="#orgbd66ccf">1.1. To Export HTML (Quick)</a></li>
+<li><a href="#orgc7c1448">1.2. To Capture YOUR Own Results</a></li>
+</ul>
+</li>
+<li><a href="#org5156a0a">2. Introduction</a></li>
+<li><a href="#org2464e2d">3. Environment Setup</a>
+<ul>
+<li><a href="#org37a30ad">3.1. Bootstrap Package System (Required for emacs -Q)</a></li>
+<li><a href="#org97f1fef">3.2. Install Ellama and Dependencies (If Not Already Installed)</a></li>
+<li><a href="#org5bf2732">3.3. Check Ollama Installation</a></li>
+<li><a href="#orge86c925">3.4. List Available Models</a></li>
+<li><a href="#org45b911b">3.5. Check Ollama Service</a></li>
+<li><a href="#org24ca3f3">3.6. Verify Ellama Installation</a></li>
+<li><a href="#orgfa4ae5e">3.7. Check LLM Package</a></li>
+</ul>
+</li>
+<li><a href="#orgb3991d1">4. Basic Configuration</a>
+<ul>
+<li><a href="#org0b8e037">4.1. View Current Configuration</a></li>
+<li><a href="#org58e35aa">4.2. Configure Ollama Provider</a></li>
+</ul>
+</li>
+<li><a href="#org6368e4f">5. Available Commands</a>
+<ul>
+<li><a href="#orgbaf4c99">5.1. List All Ellama Commands</a></li>
+<li><a href="#org3858491">5.2. Command Categories</a></li>
+</ul>
+</li>
+<li><a href="#org247b3be">6. Basic Usage Examples</a>
+<ul>
+<li><a href="#org47b7296">6.1. Example 1: Simple Chat</a></li>
+<li><a href="#org2c392cc">6.2. Example 2: Ask About Selection</a></li>
+<li><a href="#org2cc5cc1">6.3. Example 3: Code Improvement</a></li>
+<li><a href="#orgfe7cdd2">6.4. Example 4: Text Translation</a></li>
+</ul>
+</li>
+<li><a href="#orgd5e8b61">7. Advanced Features</a>
+<ul>
+<li><a href="#orga07442b">7.1. Working with Different Models</a></li>
+<li><a href="#orgfef5b59">7.2. Session Management</a></li>
+<li><a href="#org41e05d7">7.3. Context and Memory</a></li>
+</ul>
+</li>
+<li><a href="#org78e164e">8. Practical Workflows</a>
+<ul>
+<li><a href="#org1a34c50">8.1. Workflow 1: Code Refactoring</a></li>
+<li><a href="#org3cb4d71">8.2. Workflow 2: Learning New Concepts</a></li>
+<li><a href="#orgd8d1b08">8.3. Workflow 3: Documentation Generation</a></li>
+<li><a href="#org50d7ef9">8.4. Workflow 4: Interactive Debugging</a></li>
+</ul>
+</li>
+<li><a href="#org96abf69">9. Tips and Best Practices</a>
+<ul>
+<li><a href="#org067a641">9.1. Effective Prompting</a></li>
+<li><a href="#org8a9ff26">9.2. Common AI Mistakes with Emacs Lisp</a></li>
+<li><a href="#org971c8f3">9.3. Quick Fixes for Common Mistakes</a></li>
+<li><a href="#orgcf6154a">9.4. dotimes vs dolist Confusion</a></li>
+<li><a href="#orgea6462f">9.5. Iteration Cheat Sheet</a></li>
+<li><a href="#org9433e8d">9.6. AI Adds Unwanted Features</a></li>
+<li><a href="#org9eec341">9.7. Restrictive Prompts for Ellama</a></li>
+<li><a href="#orge2abe15">9.8. Performance Optimization</a></li>
+<li><a href="#org5004c80">9.9. Common Pitfalls</a></li>
+</ul>
+</li>
+<li><a href="#org455a3f7">10. Model Comparison</a>
+<ul>
+<li><a href="#org5c97166">10.1. Comparing Different Models</a></li>
+</ul>
+</li>
+<li><a href="#org1802c12">11. Integration with Other Tools</a>
+<ul>
+<li><a href="#org77a4e23">11.1. Combining with Org-mode</a></li>
+<li><a href="#org1cdba8b">11.2. Combining with Other AI Tools</a></li>
+</ul>
+</li>
+<li><a href="#org45f64d3">12. Conclusion</a>
+<ul>
+<li><a href="#org58ef262">12.1. Summary and Next Steps</a></li>
+</ul>
+</li>
+<li><a href="#orgd08067f">13. Local Variables&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1f288fc" class="outline-2">
+<h2 id="org1f288fc"><span class="section-number-2">1.</span> IMPORTANT: About Evaluation</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This document demonstrates Ellama with example results already captured.
+</p>
+</div>
+<div id="outline-container-orgbd66ccf" class="outline-3">
+<h3 id="orgbd66ccf"><span class="section-number-3">1.1.</span> To Export HTML (Quick)</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Simply run the export script:
+</p>
+<pre class="example" id="orgfb578ab">
+./export.sh
+</pre>
+
+<p>
+This creates HTML with the example results shown below each code block.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc7c1448" class="outline-3">
+<h3 id="orgc7c1448"><span class="section-number-3">1.2.</span> To Capture YOUR Own Results</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+For live AI interactions:
+</p>
+
+<ol class="org-ol">
+<li>Start Ollama: <code>ollama serve</code></li>
+<li>Open this file in Emacs</li>
+<li>Execute individual blocks: <code>C-c C-c</code> on each block</li>
+<li>Results will replace the examples below each block</li>
+<li>Export: <code>C-c C-e h h</code> or <code>./export.sh</code></li>
+</ol>
+
+<p>
+The HTML will then show YOUR actual AI responses!
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5156a0a" class="outline-2">
+<h2 id="org5156a0a"><span class="section-number-2">2.</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This document provides a hands-on, reproducible demonstration of Ellama, an Emacs
+tool for interacting with Large Language Models via Ollama.
+</p>
+
+<p>
+<b>Prerequisites:</b>
+</p>
+<ul class="org-ul">
+<li>Ollama installed: <a href="https://ollama.ai/">https://ollama.ai/</a></li>
+<li>At least one model pulled: <code>ollama pull llama3.2</code></li>
+<li>Ellama package installed in Emacs</li>
+</ul>
+
+<p>
+<b>What is Ellama?</b>
+Ellama provides a comprehensive Emacs interface for AI-assisted tasks including:
+</p>
+<ul class="org-ul">
+<li>Interactive chat sessions</li>
+<li>Code generation and refactoring</li>
+<li>Text translation and summarization</li>
+<li>Context-aware assistance</li>
+</ul>
+
+<p>
+<b>How to use this document:</b>
+</p>
+<ol class="org-ol">
+<li>Position cursor in any code block</li>
+<li>Press <code>C-c C-c</code> to execute the code</li>
+<li>Results will appear below the code block</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org2464e2d" class="outline-2">
+<h2 id="org2464e2d"><span class="section-number-2">3.</span> Environment Setup</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org37a30ad" class="outline-3">
+<h3 id="org37a30ad"><span class="section-number-3">3.1.</span> Bootstrap Package System (Required for emacs -Q)</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+If you're running this with <code>emacs -Q</code>, execute this block first to set up the package system:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Initialize package.el
+(require 'package)
+
+;; Add MELPA if not already present
+(unless (assoc "melpa" package-archives)
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+
+;; Initialize packages
+(unless package--initialized
+  (package-initialize))
+
+;; Refresh package contents if needed
+(unless package-archive-contents
+  (message "Refreshing package archive contents...")
+  (package-refresh-contents))
+
+(message "✓ Package system initialized with MELPA")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org97f1fef" class="outline-3">
+<h3 id="org97f1fef"><span class="section-number-3">3.2.</span> Install Ellama and Dependencies (If Not Already Installed)</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; Install llm (dependency)
+(unless (package-installed-p 'llm)
+  (message "Installing llm package...")
+  (condition-case err
+      (progn
+        (package-install 'llm)
+        (message "✓ llm installed successfully"))
+    (error
+     (message "✗ Failed to install llm: %s" err))))
+
+;; Install ellama
+(unless (package-installed-p 'ellama)
+  (message "Installing ellama from MELPA...")
+  (condition-case err
+      (progn
+        (package-install 'ellama)
+        (message "✓ ellama installed successfully"))
+    (error
+     (message "✗ Failed to install ellama: %s" err))))
+
+;; Load packages
+(require 'llm nil t)
+(require 'ellama nil t)
+
+(if (and (featurep 'llm) (featurep 'ellama))
+    (message "✓ Ellama and dependencies are loaded and ready!")
+  (message "✗ Some packages could not be loaded"))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5bf2732" class="outline-3">
+<h3 id="org5bf2732"><span class="section-number-3">3.3.</span> Check Ollama Installation</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-shell">if command -v ollama &amp;&gt; /dev/null; then
+    echo "✓ Ollama found at: $(which ollama)"
+    echo "Version: $(ollama --version)"
+else
+    echo "✗ Ollama not found. Install from: https://ollama.ai/"
+fi
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge86c925" class="outline-3">
+<h3 id="orge86c925"><span class="section-number-3">3.4.</span> List Available Models</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+<pre class="src src-shell">echo "Available Ollama models:"
+ollama list 2&gt;/dev/null || echo "No models found. Try: ollama pull llama3.2"
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org45b911b" class="outline-3">
+<h3 id="org45b911b"><span class="section-number-3">3.5.</span> Check Ollama Service</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+<pre class="src src-shell">curl -s http://localhost:11434/api/tags 2&gt;/dev/null &amp;&amp; \
+    echo "✓ Ollama service is running" || \
+    echo "✗ Ollama service not running. Start with: ollama serve"
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org24ca3f3" class="outline-3">
+<h3 id="org24ca3f3"><span class="section-number-3">3.6.</span> Verify Ellama Installation</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(if (featurep 'ellama)
+    (message "✓ Ellama is loaded")
+  (if (locate-library "ellama")
+      (progn
+        (require 'ellama)
+        (message "✓ Ellama loaded successfully"))
+    (message "✗ Ellama not found. Install from MELPA.")))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfa4ae5e" class="outline-3">
+<h3 id="orgfa4ae5e"><span class="section-number-3">3.7.</span> Check LLM Package</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Ellama requires the llm package as a dependency:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(if (featurep 'llm)
+    (message "✓ llm package is loaded")
+  (if (locate-library "llm")
+      (progn
+        (require 'llm)
+        (message "✓ llm package loaded"))
+    (message "✗ llm package not found. It's required for Ellama.")))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb3991d1" class="outline-2">
+<h2 id="orgb3991d1"><span class="section-number-2">4.</span> Basic Configuration</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org0b8e037" class="outline-3">
+<h3 id="org0b8e037"><span class="section-number-3">4.1.</span> View Current Configuration</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(with-eval-after-load 'ellama
+  (message "Current Ellama Configuration:
+
+Provider: %s
+Model: %s
+Sessions Directory: %s
+Auto-save: %s
+Language: %s
+Naming Scheme: %s"
+           (if (boundp 'ellama-provider)
+               (type-of ellama-provider)
+             "Not configured")
+           (if (boundp 'ellama-provider)
+               (condition-case nil
+                   (oref ellama-provider chat-model)
+                 (error "N/A"))
+             "N/A")
+           (if (boundp 'ellama-sessions-directory)
+               ellama-sessions-directory
+             "Not set")
+           (if (boundp 'ellama-auto-save)
+               ellama-auto-save
+             "Not set")
+           (if (boundp 'ellama-language)
+               ellama-language
+             "Not set")
+           (if (boundp 'ellama-naming-scheme)
+               ellama-naming-scheme
+             "Not set")))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org58e35aa" class="outline-3">
+<h3 id="org58e35aa"><span class="section-number-3">4.2.</span> Configure Ollama Provider</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(require 'llm-ollama)
+(require 'ellama)
+
+;; Basic configuration
+(setopt ellama-provider
+        (make-llm-ollama
+         :chat-model "llama3.2:latest"
+         :embedding-model "nomic-embed-text"))
+
+(setopt ellama-language "English")
+
+(message "✓ Ellama configured with llama3.2 model")
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org6368e4f" class="outline-2">
+<h2 id="org6368e4f"><span class="section-number-2">5.</span> Available Commands</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgbaf4c99" class="outline-3">
+<h3 id="orgbaf4c99"><span class="section-number-3">5.1.</span> List All Ellama Commands</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(let ((commands '()))
+  (mapatoms
+   (lambda (symbol)
+     (when (and (commandp symbol)
+                (string-prefix-p "ellama-" (symbol-name symbol)))
+       (push (cons symbol (documentation symbol)) commands))))
+  (message "Ellama Commands (%d total):\n\n%s"
+           (length commands)
+           (mapconcat
+            (lambda (cmd)
+              (format "%-35s\n  %s"
+                      (car cmd)
+                      (or (car (split-string (or (cdr cmd) "No description") "\n"))
+                          "No description")))
+            (seq-sort (lambda (a b) (string&lt; (symbol-name (car a))
+                                             (symbol-name (car b))))
+                      commands)
+            "\n\n")))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3858491" class="outline-3">
+<h3 id="org3858491"><span class="section-number-3">5.2.</span> Command Categories</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-command-categories ()
+  "Display Ellama commands organized by category."
+  (interactive)
+  (message "Ellama Command Categories:
+
+📝 CHAT &amp; INTERACTION
+  ellama-chat              - Start interactive chat
+  ellama-ask-about         - Ask about specific topic
+  ellama-ask-line          - Ask about current line
+  ellama-ask-selection     - Ask about selected region
+
+💬 TEXT OPERATIONS
+  ellama-translate         - Translate text
+  ellama-define-word       - Define word at point
+  ellama-summarize         - Summarize text
+  ellama-improve-wording   - Improve text wording
+  ellama-improve-grammar   - Fix grammar
+  ellama-make-list         - Convert to list format
+  ellama-make-format       - Reformat text
+
+💻 CODE OPERATIONS
+  ellama-code-edit         - Edit code with AI
+  ellama-code-add          - Add code functionality
+  ellama-code-improve      - Improve code quality
+  ellama-code-complete     - Complete code
+  ellama-code-review       - Review code
+
+🎨 CONTENT GENERATION
+  ellama-render            - Render markdown/org
+  ellama-complete          - Complete current text
+
+⚙️  SESSION MANAGEMENT
+  ellama-load-session      - Load saved session
+  ellama-session-remove    - Remove session
+  ellama-chat-done         - Finish current chat"))
+
+(demo-command-categories)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org247b3be" class="outline-2">
+<h2 id="org247b3be"><span class="section-number-2">6.</span> Basic Usage Examples</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org47b7296" class="outline-3">
+<h3 id="org47b7296"><span class="section-number-3">6.1.</span> Example 1: Simple Chat</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-simple-chat ()
+  "Demonstrate basic chat usage."
+  (interactive)
+  (message "Simple Chat Example:
+
+1. Start chat: M-x ellama-chat
+2. Type your question
+3. Press C-c C-c to send
+4. Wait for response
+5. Continue conversation
+
+Try it now:
+  M-x ellama-chat
+
+Example questions:
+  - 'Explain how closures work in Emacs Lisp'
+  - 'What's the difference between defun and defmacro?'
+  - 'Show me an example of using hooks'
+
+Tips:
+  - Use C-c C-c to send message
+  - Session is automatically saved
+  - Previous chats can be loaded with M-x ellama-load-session"))
+
+(demo-simple-chat)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2c392cc" class="outline-3">
+<h3 id="org2c392cc"><span class="section-number-3">6.2.</span> Example 2: Ask About Selection</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Create some example text and ask about it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-ask-selection ()
+  "Demonstrate asking about selected text."
+  (interactive)
+  (with-temp-buffer
+    (insert "(defun factorial (n)
+  (if (&lt;= n 1)
+      1
+    (* n (factorial (- n 1)))))")
+    (message "Example: Ask About Selection
+
+Sample code:
+%s
+
+Steps:
+1. Select/highlight the text (mark region)
+2. M-x ellama-ask-selection
+3. Enter your question, e.g.:
+   - 'Explain this function'
+   - 'Is this tail-recursive?'
+   - 'How can I optimize this?'
+   - 'Add error handling'
+
+Ellama will analyze the selection and respond with context."
+             (buffer-string))))
+
+(demo-ask-selection)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2cc5cc1" class="outline-3">
+<h3 id="org2cc5cc1"><span class="section-number-3">6.3.</span> Example 3: Code Improvement</h3>
+<div class="outline-text-3" id="text-6-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-code-improvement ()
+  "Demonstrate code improvement features."
+  (interactive)
+  (let ((sample-code "(defun add-nums (a b)
+  (+ a b))"))
+    (message "Code Improvement Example:
+
+Original code:
+%s
+
+Using ellama-code-improve:
+1. Place cursor in function
+2. M-x ellama-code-improve
+3. Specify improvements:
+   'Add docstring, type hints, and error handling'
+
+Expected result:
+(defun add-nums (a b)
+  \"Add two numbers A and B.
+Return their sum as a number.\"
+  (unless (and (numberp a) (numberp b))
+    (error \"Both arguments must be numbers\"))
+  (+ a b))
+
+Try other code commands:
+  - ellama-code-review: Get code review
+  - ellama-code-edit: Make specific changes
+  - ellama-code-add: Add new functionality"
+             sample-code)))
+
+(demo-code-improvement)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfe7cdd2" class="outline-3">
+<h3 id="orgfe7cdd2"><span class="section-number-3">6.4.</span> Example 4: Text Translation</h3>
+<div class="outline-text-3" id="text-6-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-translation ()
+  "Demonstrate translation features."
+  (interactive)
+  (message "Translation Example:
+
+1. Write or select text in any language
+2. M-x ellama-translate
+3. Specify target language
+
+Example:
+  Text: 'Hello, how are you?'
+  Command: M-x ellama-translate
+  Prompt: 'Translate to Spanish'
+  Result: 'Hola, ¿cómo estás?'
+
+Set default language:
+  (setopt ellama-language \"Spanish\")
+
+Then just M-x ellama-translate without specifying language.
+
+Supports any language Ollama model understands:
+  - Spanish, French, German, Italian
+  - Chinese, Japanese, Korean
+  - And many more!"))
+
+(demo-translation)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd5e8b61" class="outline-2">
+<h2 id="orgd5e8b61"><span class="section-number-2">7.</span> Advanced Features</h2>
+<div class="outline-text-2" id="text-7">
+</div>
+<div id="outline-container-orga07442b" class="outline-3">
+<h3 id="orga07442b"><span class="section-number-3">7.1.</span> Working with Different Models</h3>
+<div class="outline-text-3" id="text-7-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-model-switching ()
+  "Demonstrate how to work with different models."
+  (interactive)
+  (message "Working with Different Models:
+
+Available model options:
+
+1. General Purpose:
+   llama3.2:latest    - Balanced, good for chat
+   llama2:latest      - Stable, well-tested
+
+2. Code-Focused:
+   codellama:latest   - Specialized for coding
+   deepseek-coder     - Excellent code understanding
+   starcoder2         - Code generation
+
+3. Fast Models:
+   mistral:latest     - Fast responses
+   phi                - Small, efficient
+
+4. Specialized:
+   nous-hermes        - Instruction following
+   wizardcoder        - Advanced coding
+
+Switch models:
+
+(setopt ellama-provider
+        (make-llm-ollama
+         :chat-model \"codellama:latest\"
+         :embedding-model \"nomic-embed-text\"))
+
+Pull new models:
+  shell: ollama pull codellama
+  shell: ollama pull deepseek-coder"))
+
+(demo-model-switching)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfef5b59" class="outline-3">
+<h3 id="orgfef5b59"><span class="section-number-3">7.2.</span> Session Management</h3>
+<div class="outline-text-3" id="text-7-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-session-management ()
+  "Demonstrate session management features."
+  (interactive)
+  (message "Session Management:
+
+Automatic Saving:
+  (setopt ellama-auto-save t)
+  All chats are automatically saved
+
+Session Location:
+  Default: %s
+  Customize: (setopt ellama-sessions-directory \"~/my-ai-chats\")
+
+Naming Strategies:
+  1. Generated by LLM:
+     (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)
+     → AI generates descriptive name
+
+  2. Current timestamp:
+     (setopt ellama-naming-scheme 'ellama-generate-name-by-time)
+     → Uses timestamp: 2025-01-03-14-30-00
+
+  3. Custom function:
+     (setopt ellama-naming-scheme
+             (lambda () (format \"chat-%%s\" (random 10000))))
+
+Loading Sessions:
+  M-x ellama-load-session
+  → Select from list of previous chats
+
+Removing Sessions:
+  M-x ellama-session-remove
+  → Delete unwanted sessions
+
+List sessions:
+  ls %s"
+           (if (boundp 'ellama-sessions-directory)
+               ellama-sessions-directory
+             "~/.emacs.d/ellama-sessions")
+           (if (boundp 'ellama-sessions-directory)
+               ellama-sessions-directory
+             "~/.emacs.d/ellama-sessions")))
+
+(demo-session-management)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org41e05d7" class="outline-3">
+<h3 id="org41e05d7"><span class="section-number-3">7.3.</span> Context and Memory</h3>
+<div class="outline-text-3" id="text-7-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-context-memory ()
+  "Explain context and memory features."
+  (interactive)
+  (message "Context and Memory in Ellama:
+
+How Context Works:
+- Ellama maintains conversation history
+- Previous messages inform new responses
+- Context is preserved in sessions
+
+Using Context Effectively:
+
+1. Build on Previous Responses:
+   You: 'Explain closures'
+   AI: [explains closures]
+   You: 'Show me an example'  ← Uses previous context
+   You: 'Now make it thread-safe' ← Continues context
+
+2. Reference Earlier Code:
+   You: 'Write a function to parse JSON'
+   AI: [provides function]
+   You: 'Add error handling to that function' ← Knows which one
+
+3. Iterative Refinement:
+   You: 'Write a todo list manager'
+   AI: [basic version]
+   You: 'Add priority levels'
+   You: 'Add due dates'
+   You: 'Add persistence'
+   Each builds on previous version
+
+Context Limitations:
+- Limited by model's context window
+- Very long conversations may lose early context
+- Start new chat for unrelated topics
+
+Clear Context:
+- Start fresh: M-x ellama-chat (new session)
+- Or load different session"))
+
+(demo-context-memory)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org78e164e" class="outline-2">
+<h2 id="org78e164e"><span class="section-number-2">8.</span> Practical Workflows</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+<div id="outline-container-org1a34c50" class="outline-3">
+<h3 id="org1a34c50"><span class="section-number-3">8.1.</span> Workflow 1: Code Refactoring</h3>
+<div class="outline-text-3" id="text-8-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-refactoring-workflow ()
+  "Complete refactoring workflow example."
+  (interactive)
+  (let ((legacy-code "(defun process-data (data)
+  (let ((result '()))
+    (dolist (item data)
+      (if (not (null item))
+          (if (&gt; (length item) 0)
+              (push (upcase item) result))))
+    (reverse result)))"))
+    (message "Refactoring Workflow:
+
+Step 1: Review Original Code
+%s
+
+Step 2: Select code and run M-x ellama-code-review
+Response will identify issues:
+  - Multiple nested ifs (hard to read)
+  - Manual list building (not idiomatic)
+  - No documentation
+  - No error handling
+
+Step 3: Run M-x ellama-code-improve
+Request: 'Make this more functional and add documentation'
+
+Result:
+(defun process-data (data)
+  \"Process DATA by filtering and upcasing non-empty strings.
+DATA should be a list of strings or nils.
+Returns a new list with uppercased non-empty strings.\"
+  (seq-filter #'identity
+              (mapcar (lambda (item)
+                        (when (and item (not (string-empty-p item)))
+                          (upcase item)))
+                      data)))
+
+Step 4: Verify with tests
+M-x ellama-code-add
+Request: 'Add ert unit tests for this function'
+
+Step 5: Document
+M-x ellama-ask-selection
+Question: 'Explain the improvements made'"
+             legacy-code)))
+
+(demo-refactoring-workflow)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3cb4d71" class="outline-3">
+<h3 id="org3cb4d71"><span class="section-number-3">8.2.</span> Workflow 2: Learning New Concepts</h3>
+<div class="outline-text-3" id="text-8-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-learning-workflow ()
+  "Demonstrate learning workflow with Ellama."
+  (interactive)
+  (message "Learning Workflow:
+
+Scenario: Learning about Emacs advice system
+
+Step 1: Start Chat
+  M-x ellama-chat
+  'Explain Emacs advice system'
+
+Step 2: Get Examples
+  'Show me a simple example'
+  AI provides code example
+
+Step 3: Understand Specifics
+  'What's the difference between :before and :after advice?'
+  'When should I use :around advice?'
+
+Step 4: Practice
+  'Give me an exercise: write advice for message function'
+  Try it yourself, then ask for feedback
+
+Step 5: Real-World Application
+  'Show me how to use advice to debug a function'
+  'How do I remove advice later?'
+
+Step 6: Save Learning
+  Session is auto-saved
+  Return later: M-x ellama-load-session
+
+Benefits:
+✓ Interactive Q&amp;A
+✓ Immediate examples
+✓ Progressive learning
+✓ Saves conversation for reference"))
+
+(demo-learning-workflow)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd8d1b08" class="outline-3">
+<h3 id="orgd8d1b08"><span class="section-number-3">8.3.</span> Workflow 3: Documentation Generation</h3>
+<div class="outline-text-3" id="text-8-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-documentation-workflow ()
+  "Demonstrate documentation generation workflow."
+  (interactive)
+  (message "Documentation Workflow:
+
+Scenario: Document an undocumented function
+
+Step 1: Select function
+(defun calculate-stats (numbers)
+  (list (apply '+ numbers)
+        (/ (apply '+ numbers) (length numbers))
+        (apply 'max numbers)))
+
+Step 2: Generate docstring
+  M-x ellama-code-improve
+  'Add comprehensive docstring'
+
+Step 3: Generate usage examples
+  M-x ellama-ask-selection
+  'Provide usage examples'
+
+Step 4: Generate README section
+  M-x ellama-ask-selection
+  'Write a README section for this function'
+
+Step 5: Generate tests
+  M-x ellama-code-add
+  'Add ert tests with edge cases'
+
+Result: Fully documented and tested function!
+
+Batch processing:
+  For multiple functions:
+  1. Select all functions
+  2. M-x ellama-code-improve
+  3. 'Add docstrings to all functions'"))
+
+(demo-documentation-workflow)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org50d7ef9" class="outline-3">
+<h3 id="org50d7ef9"><span class="section-number-3">8.4.</span> Workflow 4: Interactive Debugging</h3>
+<div class="outline-text-3" id="text-8-4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-debugging-workflow ()
+  "Demonstrate debugging workflow."
+  (interactive)
+  (let ((buggy-code "(defun parse-config (file)
+  (with-temp-buffer
+    (insert-file-contents file)
+    (json-read)))"))
+    (message "Debugging Workflow:
+
+Buggy Code:
+%s
+
+Problem: Crashes on missing file
+
+Step 1: Analyze
+  M-x ellama-ask-selection
+  'What are potential bugs in this code?'
+
+AI Response:
+  - No error handling for missing files
+  - No validation of JSON format
+  - Doesn't require json library
+
+Step 2: Fix
+  M-x ellama-code-edit
+  'Add proper error handling and validation'
+
+Step 3: Test edge cases
+  M-x ellama-code-add
+  'Add tests for: missing file, invalid JSON, empty file'
+
+Step 4: Verify
+  Run tests, iterate if needed
+
+Step 5: Document
+  M-x ellama-code-improve
+  'Add docstring explaining error behavior'
+
+Interactive debugging:
+  - Ask 'why' questions
+  - Request explanations
+  - Get alternative approaches
+  - Learn as you debug"
+             buggy-code)))
+
+(demo-debugging-workflow)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org96abf69" class="outline-2">
+<h2 id="org96abf69"><span class="section-number-2">9.</span> Tips and Best Practices</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-org067a641" class="outline-3">
+<h3 id="org067a641"><span class="section-number-3">9.1.</span> Effective Prompting</h3>
+<div class="outline-text-3" id="text-9-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-prompting-tips ()
+  "Tips for effective prompting with Ellama."
+  (interactive)
+  (message "Effective Prompting Tips:
+
+✓ BE SPECIFIC
+  Bad:  'Fix this code'
+  Good: 'Add error handling for nil inputs'
+
+✓ PROVIDE CONTEXT
+  Bad:  'Optimize this'
+  Good: 'Optimize this for large lists (&gt;10000 items)'
+
+✓ ASK FOR EXAMPLES
+  'Show me an example of...'
+  'Demonstrate how to...'
+
+✓ ITERATE
+  Start simple, refine progressively:
+  1. 'Write a cache function'
+  2. 'Add TTL support'
+  3. 'Add size limits'
+  4. 'Add LRU eviction'
+
+✓ REQUEST EXPLANATIONS
+  'Explain why you chose this approach'
+  'What are the trade-offs?'
+
+✓ USE FOLLOW-UP QUESTIONS
+  'Can you simplify that?'
+  'What if the input is invalid?'
+
+✓ SPECIFY STYLE
+  'Use functional programming style'
+  'Follow elisp conventions'
+  'Add comprehensive comments'
+
+✗ AVOID VAGUE REQUESTS
+  'Make it better' - Better how?
+  'Fix bugs' - Which bugs?"))
+
+(demo-prompting-tips)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8a9ff26" class="outline-3">
+<h3 id="org8a9ff26"><span class="section-number-3">9.2.</span> Common AI Mistakes with Emacs Lisp</h3>
+<div class="outline-text-3" id="text-9-2">
+<p>
+Local models (like those used by Ellama) often confuse Lisp dialects. Here's how to spot and fix these issues:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-common-ai-mistakes ()
+  "Common mistakes AI makes with Emacs Lisp."
+  (interactive)
+  (message "Common AI Mistakes to Watch For:
+
+🚨 CRITICAL: Common Lisp vs Emacs Lisp Confusion
+
+Local models are especially prone to this confusion!
+
+❌ WRONG (Common Lisp):
+(defun print-items (items)
+  (loop for item in items
+    do (format t \"%%s\\n\" item)))  ; Common Lisp syntax!
+
+✓ CORRECT (Emacs Lisp):
+(defun print-items (items)
+  (dolist (item items)
+    (message \"%%s\" item)))          ; Emacs Lisp syntax
+
+Red Flags in Generated Code:
+  ⚠️  format t              → Should be: message
+  ⚠️  (loop for ...)        → Should be: dolist, dotimes, or cl-loop
+  ⚠️  defparameter          → Should be: defvar
+  ⚠️  (incf x)              → Should be: (cl-incf x) or (setq x (1+ x))
+  ⚠️  (decf x)              → Should be: (cl-decf x) or (setq x (1- x))
+  ⚠️  remove-if without cl- → Should be: cl-remove-if or seq-filter
+
+Real Example - FizzBuzz:
+AI might generate:
+  (format t \"Fizz\")        ; ← BREAKS! Wrong dialect
+
+Should be:
+  (message \"Fizz\")         ; ← WORKS! Correct for Emacs
+
+Quick Fix Strategy:
+1. Search generated code for 'format t'
+2. Replace with 'message'
+3. Check for 'loop' → use 'dolist' or 'cl-loop'
+4. Test in *scratch* buffer before using
+
+Better Prompts for Ellama:
+  ✓ 'Write EMACS LISP (not Common Lisp) code for...'
+  ✓ 'Use Emacs Lisp message function for output'
+  ✓ 'Use dolist and dotimes for iteration'
+  ✓ 'Follow Emacs Lisp conventions'
+
+If you get Common Lisp code:
+  → Ask: 'Rewrite this for Emacs Lisp specifically'
+  → Ask: 'Replace Common Lisp functions with Emacs equivalents'"))
+
+(demo-common-ai-mistakes)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org971c8f3" class="outline-3">
+<h3 id="org971c8f3"><span class="section-number-3">9.3.</span> Quick Fixes for Common Mistakes</h3>
+<div class="outline-text-3" id="text-9-3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-quick-fixes ()
+  "Quick fixes for common AI mistakes."
+  (interactive)
+  (message "Quick Reference: Fix AI-Generated Code
+
+REPLACE THESE:
+  (format t \"%%s\" x)      → (message \"%%s\" x)
+  (loop for ...)          → (dolist ...)
+  (defparameter x val)    → (defvar x val)
+  (incf x)                → (cl-incf x) or (setq x (1+ x))
+  (decf x)                → (cl-decf x) or (setq x (1- x))
+  (remove-if pred list)   → (seq-filter (lambda (x) (not (pred x))) list)
+  (remove-if-not p list)  → (seq-filter p list)
+
+EXAMPLE TRANSFORMATION:
+
+Before (Common Lisp):
+(defun sum-list (numbers)
+  (loop for n in numbers
+    sum n))
+
+After (Emacs Lisp):
+(defun sum-list (numbers)
+  (cl-loop for n in numbers
+    sum n))
+;; Or better:
+(defun sum-list (numbers)
+  (apply #'+ numbers))
+
+TESTING:
+1. Copy AI-generated code to *scratch*
+2. C-x C-e at end of expression
+3. If error mentions 'stringp t' → Common Lisp detected!
+4. Ask Ellama to fix: 'Convert to Emacs Lisp'"))
+
+(demo-quick-fixes)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcf6154a" class="outline-3">
+<h3 id="orgcf6154a"><span class="section-number-3">9.4.</span> dotimes vs dolist Confusion</h3>
+<div class="outline-text-3" id="text-9-4">
+<p>
+Local models frequently mix up `dotimes` and `dolist`:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; AI MISTAKE: Using dotimes with a list
+(defun greet-wrong ()
+  (let ((names '("Alice" "Bob")))
+    (dotimes (name names)      ; ← WRONG! dotimes needs a NUMBER
+      (message "Hello, %s!" name))))
+
+;; Error: wrong-type-argument number-or-marker-p
+
+;; CORRECT VERSION:
+(defun greet-correct ()
+  (let ((names '("Alice" "Bob")))
+    (dolist (name names)       ; ← RIGHT! dolist for lists
+      (message "Hello, %s!" name))))
+
+(greet-correct)
+
+(message "✓ Remember: dotimes=numbers, dolist=lists")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgea6462f" class="outline-3">
+<h3 id="orgea6462f"><span class="section-number-3">9.5.</span> Iteration Cheat Sheet</h3>
+<div class="outline-text-3" id="text-9-5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-iteration-guide ()
+  "Quick guide to Emacs iteration."
+  (interactive)
+  (message "Emacs Iteration Quick Reference:
+
+dotimes - Count from 0 to N-1
+  (dotimes (i 5)
+    (message \"%%d\" i))
+  → 0, 1, 2, 3, 4
+
+dolist - Iterate list elements
+  (dolist (item '(a b c))
+    (message \"%%s\" item))
+  → a, b, c
+
+while - Loop with condition
+  (let ((i 0))
+    (while (&lt; i 3)
+      (message \"%%d\" i)
+      (setq i (1+ i))))
+  → 0, 1, 2
+
+cl-loop - Complex iteration (needs cl-lib)
+  (cl-loop for i from 1 to 5
+           collect (* i i))
+  → (1 4 9 16 25)
+
+mapcar - Transform list
+  (mapcar (lambda (x) (* x 2))
+          '(1 2 3))
+  → (2 4 6)
+
+Common Ellama Mistakes:
+  ✗ (dotimes (name names) ...)     ; Wrong type!
+  ✓ (dolist (name names) ...)      ; Correct
+
+  ✗ (dolist (i 10) ...)            ; Wrong type!
+  ✓ (dotimes (i 10) ...)           ; Correct"))
+
+(demo-iteration-guide)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9433e8d" class="outline-3">
+<h3 id="org9433e8d"><span class="section-number-3">9.6.</span> AI Adds Unwanted Features</h3>
+<div class="outline-text-3" id="text-9-6">
+<p>
+Ellama often generates extra code you didn't ask for:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">;; You ask for a simple function, get this:
+(defgroup my-group nil           ; ← Not requested!
+  "Settings"
+  :group 'tools)
+
+(defcustom my-var t              ; ← Not requested!
+  "A variable"
+  :type 'boolean)
+
+(defun my-function ()            ; ← What you wanted
+  (message "Hello"))
+
+(provide 'my-function)           ; ← Not requested!
+
+;; Problems:
+;; - defgroup syntax often broken
+;; - Adds complexity
+;; - Harder to test
+
+(message "Fix: Use restrictive prompts!")
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9eec341" class="outline-3">
+<h3 id="org9eec341"><span class="section-number-3">9.7.</span> Restrictive Prompts for Ellama</h3>
+<div class="outline-text-3" id="text-9-7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-ellama-restrictive-prompts ()
+  "How to get clean code from Ellama."
+  (interactive)
+  (message "Restrictive Prompts for Ellama:
+
+BAD (Vague):
+  'Write a function to greet people'
+
+Result from local model:
+  - Adds defgroup (often broken)
+  - Adds defcustom
+  - Adds provide statement
+  - May mix Common Lisp syntax
+  - Hard to extract working code
+
+GOOD (Specific):
+  'Write ONLY an Emacs Lisp function called greet-names.
+   Do NOT add defgroup, defcustom, provide, or require.
+   Use dolist to iterate over a list of names.
+   Use message for output (NOT format t).
+   This is EMACS LISP, not Common Lisp.
+   Return only:
+   (defun greet-names () ...body...)
+   (greet-names)'
+
+Result:
+  - Just the function
+  - Correct syntax
+  - Easy to test
+
+Key for Local Models:
+  - Be VERY explicit
+  - List what NOT to include
+  - Specify dialect clearly
+  - Show expected format
+  - Keep it simple
+
+Ellama-specific tip:
+  Use ellama-code-edit on small snippets
+  rather than generating large chunks.
+  Easier to verify and fix!"))
+
+(demo-ellama-restrictive-prompts)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge2abe15" class="outline-3">
+<h3 id="orge2abe15"><span class="section-number-3">9.8.</span> Performance Optimization</h3>
+<div class="outline-text-3" id="text-9-8">
+<p>
+#+BEGIN<sub>SRC</sub> emacs-lisp
+(defun demo-performance-tips ()
+  "Performance optimization tips."
+  (interactive)
+  (message "Performance Tips:
+</p>
+
+<ol class="org-ol">
+<li>Model Selection:
+Fast: mistral, phi (quick responses)
+Balanced: llama3.2 (good quality/speed)
+Quality: deepseek-coder (best for complex code)</li>
+
+<li>Context Size:
+<ul class="org-ul">
+<li>Shorter prompts = faster responses</li>
+<li>Don't paste huge code blocks unnecessarily</li>
+<li>Use ellama-ask-selection for specific parts</li>
+</ul></li>
+
+<li>Streaming:
+<ul class="org-ul">
+<li>Responses stream in real-time</li>
+<li>You see output as it's generated</li>
+<li>Cancel with C-g if needed</li>
+</ul></li>
+
+<li>Session Management:
+<ul class="org-ul">
+<li>Don't keep too many sessions</li>
+<li>Clean old sessions periodically</li>
+<li>M-x ellama-session-remove</li>
+</ul></li>
+
+<li>Ollama Settings:
+<ul class="org-ul">
+<li>Ensure Ollama has adequate resources</li>
+<li>Configure in ~/.ollama/config.json</li>
+<li>Monitor with: ollama ps</li>
+</ul></li>
+
+<li>Emacs Performance:
+<ul class="org-ul">
+<li>Use Emacs daemon for faster startup</li>
+<li>Close unnecessary buffers</li>
+<li>Consider faster-rendering markdown modes</li>
+</ul></li>
+</ol>
+
+<p>
+Benchmarking:
+(benchmark-run 1
+  (ellama-chat))"))
+</p>
+
+<p>
+(demo-performance-tips)
+#+END<sub>SRP</sub>
+</p>
+</div>
+</div>
+<div id="outline-container-org5004c80" class="outline-3">
+<h3 id="org5004c80"><span class="section-number-3">9.9.</span> Common Pitfalls</h3>
+<div class="outline-text-3" id="text-9-9">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-common-pitfalls ()
+  "Common pitfalls and solutions."
+  (interactive)
+  (message "Common Pitfalls:
+
+❌ Ollama Not Running
+   ✓ Check: curl http://localhost:11434
+   ✓ Fix: ollama serve
+
+❌ Model Not Found
+   ✓ Check: ollama list
+   ✓ Fix: ollama pull llama3.2
+
+❌ Slow Responses
+   ✓ Check model size (smaller = faster)
+   ✓ Try: mistral instead of llama2
+   ✓ Reduce prompt length
+
+❌ Out of Memory
+   ✓ Use smaller model
+   ✓ Close other applications
+   ✓ Increase Ollama memory limit
+
+❌ Responses Cut Off
+   ✓ Model's context window limit
+   ✓ Start new session
+   ✓ Split into smaller queries
+
+❌ Wrong Language Response
+   ✓ Set: (setopt ellama-language \"English\")
+   ✓ Or specify in prompt
+
+❌ Code Suggestions Don't Work
+   ✓ Use code-specific model: codellama
+   ✓ Be more specific in prompts
+   ✓ Provide more context
+
+❌ Can't Load Old Sessions
+   ✓ Check: ellama-sessions-directory
+   ✓ Verify files exist: ls ~/.emacs.d/ellama-sessions"))
+
+(demo-common-pitfalls)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org455a3f7" class="outline-2">
+<h2 id="org455a3f7"><span class="section-number-2">10.</span> Model Comparison</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-org5c97166" class="outline-3">
+<h3 id="org5c97166"><span class="section-number-3">10.1.</span> Comparing Different Models</h3>
+<div class="outline-text-3" id="text-10-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-model-comparison ()
+  "Compare different Ollama models."
+  (interactive)
+  (message "Model Comparison Guide:
+
+🚀 SPEED (Fastest to Slowest)
+  1. phi (1-3B params)       - Lightning fast
+  2. mistral (7B)            - Very fast
+  3. llama3.2 (8B)           - Fast
+  4. codellama (7-13B)       - Medium
+  5. llama2 (13B)            - Medium-slow
+  6. deepseek-coder (6.7B)   - Medium
+
+🎯 CODE QUALITY (Best to Good)
+  1. deepseek-coder          - Excellent for code
+  2. codellama               - Great for code
+  3. llama3.2                - Good general + code
+  4. starcoder2              - Good for code
+  5. mistral                 - Decent for code
+  6. llama2                  - Basic code support
+
+💬 CHAT QUALITY
+  1. llama3.2                - Excellent conversation
+  2. llama2                  - Good conversation
+  3. nous-hermes             - Instruction following
+  4. mistral                 - Good general chat
+  5. codellama               - Code-focused
+
+💾 MEMORY USAGE (Smallest to Largest)
+  phi &lt; mistral &lt; llama3.2 &lt; codellama &lt; llama2
+
+📊 RECOMMENDATIONS:
+
+General Use:
+  → llama3.2 (best balance)
+
+Pure Coding:
+  → deepseek-coder or codellama
+
+Quick Tasks:
+  → mistral or phi
+
+Learning:
+  → llama3.2 (good explanations)
+
+Limited RAM:
+  → phi or mistral (smaller models)
+
+Test different models:
+(setopt ellama-provider
+        (make-llm-ollama :chat-model \"MODEL-NAME\"))"))
+
+(demo-model-comparison)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org1802c12" class="outline-2">
+<h2 id="org1802c12"><span class="section-number-2">11.</span> Integration with Other Tools</h2>
+<div class="outline-text-2" id="text-11">
+</div>
+<div id="outline-container-org77a4e23" class="outline-3">
+<h3 id="org77a4e23"><span class="section-number-3">11.1.</span> Combining with Org-mode</h3>
+<div class="outline-text-3" id="text-11-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-org-integration ()
+  "Demonstrate using Ellama with org-mode."
+  (interactive)
+  (message "Ellama + Org-mode Integration:
+
+Use Case 1: Research Notes
+  1. Create org file: research.org
+  2. Write heading: * Understanding Macros
+  3. M-x ellama-chat
+  4. Ask questions, paste responses into org
+
+Use Case 2: Code Documentation
+  #+BEGIN_SRC emacs-lisp
+  (defun my-function ...)
+</pre>
+</div>
+
+<p>
+Select code → ellama-ask-selection
+'Document this for README'
+Paste result into org
+</p>
+
+<p>
+Use Case 3: TODO Generation
+</p>
+<ul class="org-ul">
+<li>Project Tasks</li>
+</ul>
+<p>
+M-x ellama-chat
+'Generate TODO list for implementing a cache system'
+Copy as org TODOs
+</p>
+
+<p>
+Use Case 4: Meeting Notes
+</p>
+<ul class="org-ul">
+<li>Meeting with Bob</li>
+</ul>
+<p>
+M-x ellama-summarize
+Summarizes meeting notes
+</p>
+
+<p>
+Use Case 5: Learning Journal
+</p>
+<ul class="org-ul">
+<li>Daily Learning - 2025-01-03</li>
+</ul>
+<p>
+** Learned about advice
+[Your notes]
+M-x ellama-ask-selection
+'Quiz me on this material'
+</p>
+
+<p>
+Org-babel Integration:
+  Since Ellama responses are text,
+  copy into org src blocks for execution"))
+</p>
+
+<p>
+(demo-org-integration)
+#+END<sub>SRC</sub>
+</p>
+</div>
+</div>
+<div id="outline-container-org1cdba8b" class="outline-3">
+<h3 id="org1cdba8b"><span class="section-number-3">11.2.</span> Combining with Other AI Tools</h3>
+<div class="outline-text-3" id="text-11-2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-tool-combination ()
+  "How Ellama compares/combines with other tools."
+  (interactive)
+  (message "Ellama vs Other AI Tools:
+
+Ellama vs gptel:
+  Ellama: More commands, Ollama-focused, local-first
+  gptel: Simpler, multiple backends, cloud-friendly
+  → Use both! gptel for cloud APIs, Ellama for local
+
+Ellama vs org-ai:
+  Ellama: Standalone, many commands
+  org-ai: Org-mode native, inline AI
+  → Complement each other
+
+Ellama vs aider:
+  Ellama: In-Emacs, interactive
+  aider: Git-focused, autonomous edits
+  → Different use cases
+
+Combined Workflow:
+  1. Use Ellama for exploration and learning
+  2. Use gptel for quick cloud API queries
+  3. Use org-ai for notes and documentation
+  4. Use aider for large refactorings
+
+Example:
+  - Explore ideas: Ellama
+  - Document: org-ai
+  - Implement: aider
+  - Quick questions: gptel
+
+All tools complement each other!"))
+
+(demo-tool-combination)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org45f64d3" class="outline-2">
+<h2 id="org45f64d3"><span class="section-number-2">12.</span> Conclusion</h2>
+<div class="outline-text-2" id="text-12">
+</div>
+<div id="outline-container-org58ef262" class="outline-3">
+<h3 id="org58ef262"><span class="section-number-3">12.1.</span> Summary and Next Steps</h3>
+<div class="outline-text-3" id="text-12-1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(defun demo-summary ()
+  "Summary and next steps."
+  (interactive)
+  (message "Ellama Summary:
+
+✅ What You Learned:
+   - Installing and configuring Ellama
+   - Basic and advanced commands
+   - Working with different models
+   - Practical workflows
+   - Best practices and tips
+
+🎯 Key Takeaways:
+   - Ellama uses local Ollama models (private!)
+   - Many specialized commands for different tasks
+   - Session management for conversation history
+   - Works great with org-mode
+   - Complements other AI tools
+
+🚀 Next Steps:
+   1. Install Ollama: https://ollama.ai/
+   2. Pull a model: ollama pull llama3.2
+   3. Install Ellama: M-x package-install RET ellama
+   4. Try basic chat: M-x ellama-chat
+   5. Explore commands: M-x ellama- TAB
+   6. Read code examples in this document
+   7. Execute examples with C-c C-c
+   8. Experiment with your own prompts
+
+📚 Resources:
+   - Ellama: https://github.com/s-kostyaev/ellama
+   - Ollama: https://ollama.ai/
+   - Models: https://ollama.ai/library
+   - Community: r/emacs, emacs.stackexchange.com
+
+💡 Practice Ideas:
+   - Refactor a real function in your codebase
+   - Generate documentation for a project
+   - Learn a new elisp concept interactively
+   - Create a custom workflow for your needs
+
+Happy AI-assisted Emacs hacking! 🎉"))
+
+(demo-summary)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd08067f" class="outline-2">
+<h2 id="orgd08067f"><span class="section-number-2">13.</span> Local Variables&#xa0;&#xa0;&#xa0;<span class="tag"><span class="ARCHIVE">ARCHIVE</span></span></h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Emacs AI Study Group (<a href="mailto:emacs-ai-study-group@example.com">emacs-ai-study-group@example.com</a>)</p>
+<p class="date">Date: 2025-01-03 Fri 00:00</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 30.2 (<a href="https://orgmode.org">Org</a> mode 9.7.11)</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
