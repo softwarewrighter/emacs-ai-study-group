@@ -1,9 +1,37 @@
 #+TITLE: Ellama Interactive Demo
 #+AUTHOR: Emacs AI Study Group
 #+DATE: [2025-01-03]
+#+EMAIL: emacs-ai-study-group@example.com
+#+OPTIONS: toc:3 num:t html-postamble:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 #+PROPERTY: header-args:emacs-lisp :results output :exports both
 #+PROPERTY: header-args:shell :results output :exports both
 #+STARTUP: showeverything
+
+* IMPORTANT: About Evaluation
+
+This document demonstrates Ellama with example results already captured.
+
+** To Export HTML (Quick)
+
+Simply run the export script:
+#+BEGIN_EXAMPLE
+./export.sh
+#+END_EXAMPLE
+
+This creates HTML with the example results shown below each code block.
+
+** To Capture YOUR Own Results
+
+For live AI interactions:
+
+1. Start Ollama: ~ollama serve~
+2. Open this file in Emacs
+3. Execute individual blocks: ~C-c C-c~ on each block
+4. Results will replace the examples below each block
+5. Export: ~C-c C-e h h~ or ~./export.sh~
+
+The HTML will then show YOUR actual AI responses!
 
 * Introduction
 
