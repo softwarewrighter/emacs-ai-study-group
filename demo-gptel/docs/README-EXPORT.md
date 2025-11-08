@@ -78,20 +78,37 @@ In the org file, add:
 #+HTML_HEAD: <script src="custom.js"></script>
 ```
 
-## Executing Babel Blocks Before Export
+## About Babel Block Evaluation
 
-If you want to run all babel blocks and capture results before exporting:
+**Important:** The export scripts are configured to **NOT evaluate babel blocks** during export. This is intentional because:
+
+1. Export should be fast and not depend on external services
+2. The org file already includes example results
+3. Evaluating requires Ollama to be running
+4. Results may vary between runs
+
+### To Execute Blocks Interactively
+
+If you want to run babel blocks and capture live results:
 
 ```elisp
 ;; In Emacs, with gptel-babel-demo.org open:
-M-x org-babel-execute-buffer RET
+C-c C-c           ; Execute current block
+M-x org-babel-execute-buffer RET  ; Execute all blocks
 ```
 
-**Note:** This requires:
+**Requirements for execution:**
 - Ollama running (`ollama serve`)
 - A model pulled (`ollama pull llama3.2`)
 
 Alternatively, use the mock framework for demonstration purposes (results will be from mocked responses).
+
+### Export Behavior
+
+The document is configured with `:eval no-export` which means:
+- **Interactive use**: Blocks can be executed with `C-c C-c`
+- **Export**: Blocks are NOT executed, existing results are preserved
+- **Best of both worlds**: Safe export + interactive execution when desired
 
 ## Publishing to a Website
 

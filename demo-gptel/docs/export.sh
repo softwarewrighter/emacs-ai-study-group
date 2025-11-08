@@ -8,8 +8,11 @@ cd "$SCRIPT_DIR"
 
 echo "Exporting gptel-babel-demo.org to HTML..."
 
+# Export without evaluating babel blocks
 emacs --batch \
   --eval "(require 'ox-html)" \
+  --eval "(setq org-confirm-babel-evaluate nil)" \
+  --eval "(setq org-export-use-babel nil)" \
   --visit=gptel-babel-demo.org \
   --funcall org-html-export-to-html
 

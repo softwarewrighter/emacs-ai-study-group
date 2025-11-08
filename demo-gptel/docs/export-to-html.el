@@ -37,6 +37,8 @@ If FILE is provided, export that file instead."
             (org-export-with-toc t)
             (org-export-with-section-numbers t)
             (org-html-postamble t)
+            (org-confirm-babel-evaluate nil)
+            (org-export-use-babel nil)  ; Don't evaluate blocks during export
             (org-html-postamble-format
              '(("en" "<p class=\"author\">Author: %a</p>
 <p class=\"date\">Created: %d</p>
