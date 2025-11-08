@@ -4,8 +4,30 @@
 #+EMAIL: emacs-ai-study-group@example.com
 #+OPTIONS: toc:3 num:t html-postamble:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-#+PROPERTY: header-args:emacs-lisp :session *gptel-demo* :results output :exports both :eval no-export
+#+PROPERTY: header-args:emacs-lisp :session *gptel-demo* :results output :exports both
 #+STARTUP: showeverything
+
+* IMPORTANT: About Evaluation
+
+This document has two modes of use:
+
+** Mode 1: Quick Export (Pre-filled Results)
+Export without evaluating blocks (fast, no Ollama needed):
+#+BEGIN_EXAMPLE
+./export.sh
+#+END_EXAMPLE
+
+The HTML will show example results that are already captured below each code block.
+
+** Mode 2: Live Evaluation (Real AI Results)
+To capture LIVE results from your Ollama instance:
+
+1. Start Ollama: ~ollama serve~
+2. Execute blocks interactively in Emacs: ~C-c C-c~ on each block
+3. Or execute all blocks: ~M-x org-babel-execute-buffer~
+4. Then export with: ~./export.sh --eval~ or ~C-c C-e h h~
+
+The HTML will show YOUR actual AI responses!
 
 * Introduction
 
