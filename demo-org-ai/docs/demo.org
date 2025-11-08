@@ -543,8 +543,8 @@ Copy refined code back to your source file!"))
 
 Example Research Session:
 
-* Understanding Emacs Advice System
-** Initial Questions
+,* Understanding Emacs Advice System
+,** Initial Questions
 
 #+begin_ai
 [ME]: Explain the Emacs advice system. What problem does it solve?
@@ -560,7 +560,7 @@ Example Research Session:
 [AI]: Use advice when... Use hooks when...
 #+end_ai
 
-** Practical Examples
+,** Practical Examples
 
 #+begin_ai
 [ME]: Show me how to use advice to log all calls to 'message'
@@ -577,7 +577,7 @@ Example Research Session:
 #+end_src
 #+end_ai
 
-** Experiments
+,** Experiments
 [Try the code here, document results]
 
 Benefits:
@@ -598,8 +598,8 @@ Benefits:
   (interactive)
   (message "Documentation Workflow:
 
-* Package Documentation
-** API Reference
+,* Package Documentation
+,** API Reference
 
 #+begin_ai
 [ME]: Generate API documentation for these functions:
@@ -614,13 +614,13 @@ Benefits:
 Format as org table with: function, args, description, returns.
 #+end_ai
 
-** Usage Examples
+,** Usage Examples
 
 #+begin_ai
 [ME]: Write 5 practical usage examples for my-cache API
 #+end_ai
 
-** Installation Guide
+,** Installation Guide
 
 #+begin_ai
 [ME]: Write installation instructions for:
@@ -630,7 +630,7 @@ Format as org table with: function, args, description, returns.
 - Straight.el
 #+end_ai
 
-** Troubleshooting
+,** Troubleshooting
 
 #+begin_ai
 [ME]: Generate troubleshooting section for common cache issues:
@@ -639,7 +639,7 @@ Format as org table with: function, args, description, returns.
 - Performance problems
 #+end_ai
 
-** Export
+,** Export
 Now export to:
 - C-c C-e h h (HTML)
 - C-c C-e l p (PDF)
@@ -658,10 +658,10 @@ Result: Professional documentation!"))
   (interactive)
   (message "Learning Journal Workflow:
 
-* Daily Learning Log
-** <2025-01-03 Fri>
+,* Daily Learning Log
+,** <2025-01-03 Fri>
 
-*** Today's Goal: Learn Emacs Macros
+,*** Today's Goal: Learn Emacs Macros
 
 #+begin_ai
 [ME]: Explain Emacs macros. Why use macros vs functions?
@@ -669,7 +669,7 @@ Result: Professional documentation!"))
 [AI]: Macros operate at compile time...
 #+end_ai
 
-*** Understanding
+,*** Understanding
 
 My notes: Macros don't evaluate arguments...
 
@@ -680,7 +680,7 @@ My notes: Macros don't evaluate arguments...
 (defmacro when-let* ...)
 #+end_ai
 
-*** Practice
+,*** Practice
 
 #+begin_src emacs-lisp
 ;; My attempt:
@@ -694,7 +694,7 @@ My notes: Macros don't evaluate arguments...
 [AI]: Your macro is correct! However...
 #+end_ai
 
-*** Quiz Myself
+,*** Quiz Myself
 
 #+begin_ai
 [ME]: Quiz me on macros with 3 questions
@@ -702,7 +702,7 @@ My notes: Macros don't evaluate arguments...
 
 [Answer each question here]
 
-*** Summary
+,*** Summary
 - Learned: Macros vs functions
 - Practiced: Writing simple macros
 - Need to review: Macro hygiene
@@ -727,13 +727,13 @@ Benefits:
   (interactive)
   (message "Code Review Documentation:
 
-* Code Review: PR #123 - Add caching system
-** Overview
+,* Code Review: PR #123 - Add caching system
+,** Overview
 - Author: Alice
 - Date: 2025-01-03
 - Files: cache.el, cache-test.el
 
-** Review: cache.el
+,** Review: cache.el
 
 #+begin_ai :system \"You are an expert code reviewer\"
 [ME]: Review this implementation:
@@ -755,23 +755,23 @@ Check for:
 
 [AI provides detailed review]
 
-** Issues Found
+,** Issues Found
 1. [ ] No nil checking for key
 2. [ ] Race condition in multi-threaded use
 3. [ ] Missing docstring
 
-** Suggestions
+,** Suggestions
 
 #+begin_ai
 [ME]: Suggest an improved version addressing above issues
 #+end_ai
 
-** Final Verdict
+,** Final Verdict
 - Approve with changes
 - Main concerns: [list]
 - Excellent: [list]
 
-** Follow-up
+,** Follow-up
 #+begin_ai
 [ME]: Generate ert tests for the improved version
 #+end_ai
@@ -906,8 +906,8 @@ Use Cases:
 
 Generate and manage TODOs with AI!
 
-* Project: Build Cache System
-** Planning
+,* Project: Build Cache System
+,** Planning
 
 #+begin_ai
 [ME]: Help me break down this project into tasks:
@@ -923,18 +923,18 @@ Generate org TODO list.
 
 [AI generates:]
 
-** Tasks
-*** TODO Design API
-*** TODO Implement core cache structure
-*** TODO Add TTL tracking
-*** TODO Implement LRU eviction
-*** TODO Add thread safety
-*** TODO Write tests
-*** TODO Write documentation
+,** Tasks
+,*** TODO Design API
+,*** TODO Implement core cache structure
+,*** TODO Add TTL tracking
+,*** TODO Implement LRU eviction
+,*** TODO Add thread safety
+,*** TODO Write tests
+,*** TODO Write documentation
 
-** Implementation Notes
+,** Implementation Notes
 
-*** TODO Implement core cache structure
+,*** TODO Implement core cache structure
 SCHEDULED: <2025-01-04>
 
 #+begin_ai
