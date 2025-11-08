@@ -4,7 +4,7 @@
 #+EMAIL: emacs-ai-study-group@example.com
 #+OPTIONS: toc:3 num:t html-postamble:t
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-#+PROPERTY: header-args:emacs-lisp :session *gptel-demo* :results output :exports both
+#+PROPERTY: header-args:emacs-lisp :results output :exports both
 #+STARTUP: showeverything
 
 * IMPORTANT: About Evaluation
