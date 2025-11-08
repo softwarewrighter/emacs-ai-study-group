@@ -513,7 +513,7 @@ For testing or demonstrations without a running LLM, you can use the mock framew
 
 This document uses custom CSS for better HTML output:
 
-#+BEGIN_SRC css :tangle style.css
+#+BEGIN_SRC css :eval never :tangle no
 /* Custom styling for exported HTML */
 body {
     max-width: 900px;
