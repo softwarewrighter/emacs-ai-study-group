@@ -2,7 +2,35 @@
 
 This directory contains `gptel-babel-demo.org`, an interactive demonstration of using gptel with Org babel blocks that can be exported to HTML.
 
-## Quick Export
+## Two Export Modes
+
+### Mode 1: Fast Export with Pre-filled Results (No Ollama Needed)
+
+This mode exports the document with example results already embedded. **No evaluation happens**, so it's fast and doesn't require Ollama to be running.
+
+```bash
+./export.sh
+```
+
+### Mode 2: Live Export with Real AI Results (Requires Ollama)
+
+This mode executes all babel blocks and captures REAL responses from your Ollama instance.
+
+```bash
+# 1. Start Ollama
+ollama serve
+
+# 2. Export with evaluation
+./export.sh --eval
+```
+
+This will:
+- Execute all babel blocks
+- Capture live AI responses
+- Export to HTML with YOUR actual results
+- Take several minutes (each AI call takes 30-60 seconds)
+
+## Quick Export Methods
 
 ### Option 1: From Emacs (Interactive)
 
@@ -34,15 +62,18 @@ emacs --batch -l export-to-html.el
 
 This creates `gptel-babel-demo.html` in the same directory.
 
-### Option 4: Quick Bash Script
+### Option 4: Quick Bash Script (Pre-filled)
 
 ```bash
-#!/bin/bash
 cd demo-gptel/docs
-emacs --batch \
-  --eval "(require 'ox-html)" \
-  --visit=gptel-babel-demo.org \
-  --funcall org-html-export-to-html
+./export.sh
+```
+
+### Option 5: With Live Evaluation
+
+```bash
+cd demo-gptel/docs
+./export.sh --eval  # Requires Ollama running
 ```
 
 ## Files
@@ -78,20 +109,53 @@ In the org file, add:
 #+HTML_HEAD: <script src="custom.js"></script>
 ```
 
-## Executing Babel Blocks Before Export
+## Understanding the Two Workflows
 
-If you want to run all babel blocks and capture results before exporting:
+### Workflow 1: Share Example Results (Fast)
+
+Perfect for:
+- Sharing documentation without requiring Ollama
+- Quick previews
+- Demonstrating what the tool can do
+
+```bash
+./export.sh  # Uses pre-filled example results
+```
+
+**Pros:** Fast (< 10 seconds), no dependencies, consistent results
+**Cons:** Shows example data, not your actual AI responses
+
+### Workflow 2: Capture Live Results (Slow)
+
+Perfect for:
+- Documenting YOUR specific AI interactions
+- Testing different models
+- Creating tutorials with real examples
+- Research and analysis
+
+```bash
+ollama serve  # In one terminal
+./export.sh --eval  # In another (takes 5-10 minutes)
+```
+
+**Pros:** Real AI responses, your actual results
+**Cons:** Requires Ollama running, takes time, results vary
+
+### Interactive Execution
+
+You can also execute blocks one at a time in Emacs:
 
 ```elisp
 ;; In Emacs, with gptel-babel-demo.org open:
-M-x org-babel-execute-buffer RET
+C-c C-c           ; Execute current block
+M-x org-babel-execute-buffer RET  ; Execute all blocks
 ```
 
-**Note:** This requires:
-- Ollama running (`ollama serve`)
-- A model pulled (`ollama pull llama3.2`)
-
-Alternatively, use the mock framework for demonstration purposes (results will be from mocked responses).
+This lets you:
+- Test individual interactions
+- Modify prompts and re-run
+- Debug issues
+- Build up results incrementally
 
 ## Publishing to a Website
 
