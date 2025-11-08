@@ -9,12 +9,14 @@
 This document provides a hands-on, reproducible demonstration of org-ai, which
 integrates AI capabilities directly into org-mode documents.
 
-*Prerequisites:*
+** Prerequisites
+
 - OpenAI API key (for ChatGPT, DALL-E, Whisper)
 - org-ai package installed from MELPA
 - org-mode (built into Emacs)
 
-*What is org-ai?*
+** What is org-ai?
+
 org-ai brings AI directly into org-mode documents using special #+begin_ai blocks:
 - Interactive chat with LLMs
 - Code generation and refactoring
@@ -23,14 +25,16 @@ org-ai brings AI directly into org-mode documents using special #+begin_ai block
 - Context-aware assistance
 - All results stay in your org document
 
-*Unique Features:*
+** Unique Features
+
 - Native org-mode integration
 - Results embedded in document
 - Export-friendly (PDF, HTML, etc.)
 - Version control friendly
 - Reproducible research format
 
-*How to use this document:*
+** How to use this document
+
 1. Position cursor in any code block
 2. Press =C-c C-c= to execute the code
 3. Results will appear below the code block
